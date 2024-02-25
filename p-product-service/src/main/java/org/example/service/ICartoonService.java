@@ -2,6 +2,7 @@ package org.example.service;
 
 import org.example.core.AjaxResult;
 import org.example.request.AddPatternsReq;
+import org.example.request.CartoonSaleNumReq;
 import org.example.request.CreateCartoonReq;
 import org.example.request.UpdateCartoonReq;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,5 +25,8 @@ public interface ICartoonService {
 
     AjaxResult meCreate();
 
+    AjaxResult price(String cartoonId);
+
+    AjaxResult sales(CartoonSaleNumReq req);
 }
 

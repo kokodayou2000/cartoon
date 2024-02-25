@@ -2,6 +2,7 @@ package org.example.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.apache.bcel.classfile.Constant;
+import org.aspectj.weaver.loadtime.Aj;
 import org.example.constant.CartoonConstant;
 import org.example.core.AjaxResult;
 import org.example.feign.IFileServer;
@@ -13,6 +14,7 @@ import org.example.model.ChapterDO;
 import org.example.repository.CartoonRepository;
 import org.example.repository.ChapterRepository;
 import org.example.request.AddPatternsReq;
+import org.example.request.CartoonSaleNumReq;
 import org.example.request.CreateCartoonReq;
 import org.example.request.UpdateCartoonReq;
 import org.example.response.CartoonInfo;
@@ -194,6 +196,29 @@ public class CartoonServiceImpl implements ICartoonService {
             }
         }
         return AjaxResult.success(resList);
+    }
+
+    @Override
+    public AjaxResult price(String cartoonId) {
+        Optional<CartoonDO> byId = cartoonRepository.findById(cartoonId);
+        if (byId.isEmpty()){
+            return AjaxResult.error("查询漫画失败");
+        }
+        // 返回价格
+        return AjaxResult.success(byId.get().getPrice());
+    }
+
+    @Override
+    public AjaxResult sales(CartoonSaleNumReq req) {
+        Optional<CartoonDO> byId = cartoonRepository.findById(req.getCartoonId());
+        if (byId.isEmpty()){
+            return AjaxResult.error("查询漫画失败");
+        }
+        CartoonDO cartoonDO = byId.get();
+        Integer salesNum = cartoonDO.getSalesNum();
+        cartoonDO.setSalesNum(req.getSales() + salesNum);
+        CartoonDO save = cartoonRepository.save(cartoonDO);
+        return AjaxResult.success(save);
     }
 
 

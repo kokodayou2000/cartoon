@@ -2,6 +2,7 @@ package org.example.controller;
 
 import org.example.core.AjaxResult;
 import org.example.request.AddPatternsReq;
+import org.example.request.CartoonSaleNumReq;
 import org.example.request.CreateCartoonReq;
 import org.example.request.UpdateCartoonReq;
 import org.example.service.IBannerService;
@@ -26,6 +27,29 @@ public class CartoonController {
     @GetMapping("/recommend")
     public AjaxResult recommend() {
         return AjaxResult.error();
+    }
+
+
+    /**
+     * 获取漫画单集的价格
+     * @return 根据用户喜欢的漫画推荐
+     */
+    @GetMapping("/price/{cartoonId}")
+    public AjaxResult price(
+            @PathVariable("cartoonId") String cartoonId
+    ) {
+        return cartoonService.price(cartoonId);
+    }
+
+    /**
+     * 当漫画销售之后，更新漫画的销售额
+     * @return
+     */
+    @PostMapping("/sales")
+    public AjaxResult sales(
+            @RequestBody CartoonSaleNumReq req
+            ) {
+        return cartoonService.sales(req);
     }
 
     /**

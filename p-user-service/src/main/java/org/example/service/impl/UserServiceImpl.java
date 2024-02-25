@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.Md5Crypt;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.aspectj.weaver.loadtime.Aj;
 import org.example.core.AjaxResult;
 import org.example.enums.SendCodeEnum;
 import org.example.fegin.IFileServer;
@@ -15,6 +14,7 @@ import org.example.interceptor.TokenCheckInterceptor;
 import org.example.model.BaseUser;
 import org.example.model.UserDO;
 import org.example.mapper.UserMapper;
+import org.example.request.UserPointReq;
 import org.example.request.UserLoginRequest;
 import org.example.request.UserRegisterRequest;
 import org.example.service.NotifyService;
@@ -75,6 +75,45 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
         }
         return AjaxResult.error();
     }
+
+    @Override
+    public AjaxResult charge(UserPointReq req) {
+        String userId = req.getUserId();
+        UserDO userDO = userMapper.selectById(userId);
+        if (userDO == null){
+            return AjaxResult.error("查找用户失败");
+        }
+        userDO.setPoints(userDO.getPoints() + req.getPoint());
+        userMapper.updateById(userDO);
+        return AjaxResult.success("充值成功");
+    }
+
+    @Override
+    public AjaxResult balance(String userId) {
+        UserDO userDO = userMapper.selectById(userId);
+        if (userDO == null){
+            return AjaxResult.error("查找用户失败");
+        }
+        return AjaxResult.success(userDO.getPoints());
+    }
+
+    @Override
+    public AjaxResult pay(UserPointReq req) {
+        String userId = req.getUserId();
+        UserDO userDO = userMapper.selectById(userId);
+        if (userDO == null){
+            return AjaxResult.error("查找用户失败");
+        }
+        int result = userDO.getPoints() - req.getPoint();
+        if (result < 0){
+            return AjaxResult.error("用户余额不足");
+        }
+        userDO.setPoints(result);
+        userMapper.updateById(userDO);
+        return AjaxResult.success("支付成功");
+    }
+
+
 
 
     /**

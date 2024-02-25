@@ -16,6 +16,7 @@
         <module>p-user-service</module>
         <module>p-gateway</module>
         <module>p-file-service</module>
+        <module>p-order-service</module>
     </modules>
 
     <properties>

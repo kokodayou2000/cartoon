@@ -2,6 +2,7 @@ package org.example.controller;
 
 
 import org.example.core.AjaxResult;
+import org.example.request.UserPointReq;
 import org.example.request.UserLoginRequest;
 import org.example.request.UserRegisterRequest;
 import org.example.service.UserService;
@@ -23,6 +24,29 @@ public class UserController {
     @GetMapping("/exist/userId")
     public AjaxResult exist(String userId){
         return userService.exist(userId);
+    }
+
+    // 充值
+    @PostMapping("/charge")
+    public AjaxResult charge(
+            @RequestBody UserPointReq req
+    ){
+        return userService.charge(req);
+    }
+
+    // 余额 这个接口应该只能内部调用
+    // 查看用户剩余 point
+    @GetMapping("/balance/{userId}")
+    public AjaxResult balance(@PathVariable("userId") String userId){
+        return userService.balance(userId);
+    }
+
+    // 充值
+    @PostMapping("/pay")
+    public AjaxResult pay(
+            @RequestBody UserPointReq req
+    ){
+        return userService.pay(req);
     }
 
 

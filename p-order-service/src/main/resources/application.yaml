@@ -1,0 +1,65 @@
+server:
+  port: 7004
+
+spring:
+  application:
+    name: c-order-service
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    virtual-host: /
+    username: admin
+    password: password
+    listener:
+      simple:
+        acknowledge-mode: manual
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+      config:
+        server-addr: 127.0.0.1:8848
+  redis:
+    host: 127.0.0.1
+    port: 6379
+  #数据库配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/cartoon?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+logging:
+  level:
+    root: INFO
+
+
+#自定义消息队列配置，发送锁定库存消息-》延迟exchange-》lock.queue-》死信exchange-》release.queue
+mqConfig:
+  #延迟队列，不能被监听消费
+  order_close_delay_queue: order.close.delay.queue
+
+  #延迟队列的消息过期后转发的队列 死信队列
+  order_close_queue: order.close.queue
+
+  #交换机
+  order_event_exchange: order.event.exchange
+
+  #进入延迟队列的路由key
+  order_close_delay_routing_key: order.close.delay.routing.key
+
+  #消息过期，进入释放死信队列的key
+  order_close_routing_key: order.close.routing.key
+
+  #消息过期时间,毫秒,测试改为15秒
+  ttl: 100000
+
+alipay:
+  #  支付成功的跳转页面
+  success_return_url: https://kokodayou.top
+  #  支付宝通知回调接口
+  callback_url: http://eopbit7wrsra.ngrok.xiaomiqiu123.top/order-service/api/callback/order/v1/alipay
