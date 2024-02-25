@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="mongodb@localhost">
+  <database-model serializer="dbm" dbms="MONGO" family-id="MONGO" format-version="4.51">
+    <root id="1">
+      <ServerVersion>6.0.5</ServerVersion>
+    </root>
+    <schema id="2" parent="1" name="admin"/>
+    <schema id="3" parent="1" name="cartoon">
+      <Current>1</Current>
+    </schema>
+    <schema id="4" parent="1" name="config"/>
+    <schema id="5" parent="1" name="courseDesign"/>
+    <schema id="6" parent="1" name="db"/>
+    <schema id="7" parent="1" name="flux_tute"/>
+    <schema id="8" parent="1" name="local"/>
+    <schema id="9" parent="1" name="markdown"/>
+    <schema id="10" parent="1" name="misc"/>
+    <schema id="11" parent="1" name="sample_restaurants"/>
+    <schema id="12" parent="1" name="t"/>
+    <schema id="13" parent="1" name="test"/>
+    <schema id="14" parent="1" name="tute"/>
+    <schema id="15" parent="1" name="user"/>
+    <schema id="16" parent="1" name="webflux"/>
+  </database-model>
+</dataSource>

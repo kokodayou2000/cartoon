@@ -1,0 +1,41 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: p-gateway-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    gateway:
+      routes: #数组形式
+        - id: c-product-service
+          uri: lb://c-product-service
+          order: 1
+          predicates:
+            - Path=/product-server/**
+          filters:
+            - StripPrefix=1
+        - id: c-user-service
+          uri: lb://c-user-service
+          order: 2
+          predicates:
+            - Path=/user-server/**
+          filters:
+            - StripPrefix=1
+        - id: c-file-service
+          uri: lb://c-file-service
+          order: 2
+          predicates:
+            - Path=/file-server/**
+          filters:
+            - StripPrefix=1
+
+      discovery:
+        locator:
+          enabled: true
+logging:
+  level:
+    root: INFO
+    com.alibaba.nacos.client.config.impl: WARN
