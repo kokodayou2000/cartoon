@@ -59,7 +59,9 @@ mqConfig:
   ttl: 100000
 
 alipay:
-  #  支付成功的跳转页面
+  #  支付成功 跳转页面
   success_return_url: https://kokodayou.top
   #  支付宝通知回调接口
-  callback_url: http://eopbit7wrsra.ngrok.xiaomiqiu123.top/order-service/api/callback/order/v1/alipay
+  callback_url: https://hb5ougo7rww1.ngrok.xiaomiqiu123.top/order-service/api/v1/callback/order/alipay
+  # 异步公职
+  notify_url: https://hb5ougo7rww1.ngrok.xiaomiqiu123.top/order-service/api/v1/callback/order/alipay

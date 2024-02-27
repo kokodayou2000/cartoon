@@ -16,25 +16,26 @@ import java.io.IOException;
 @Component
 @RabbitListener(queues = "${mqConfig.order_close_queue}")
 public class ProductOrderMQListener {
+
     @Autowired
     private ProductOrderService productOrderService;
 
-
     /**
-     * 死信处理器
-     * 关键点：
-     * 消息重复消费，幂等性保证
-     * 并发状态下如何保证安全
+     * 订单的三种状态 NEW PAY CANCEL
+     * 当 notify_url 由于种种原因没有发送请求成功的时候，我们需要重新的向支付宝服务器查询本次订单的交易状态
+     * 假如订单状态为 PAY 就不需要向支付宝服务器查询本次订单状态了
+     * 如果支付宝那边返回用户已经付款了，就修改支付状态 从 NEW 修改为 PAY
+     * 如果查询不到，就说明用户并没有付款，就修改支付状态 从 NEW 修改为 CANCEL
      * @param orderMessage
      * @param message
      * @param channel
      * @throws IOException
      */
+
     @RabbitHandler
     public void closeProductOrder(OrderMessage orderMessage, Message message, Channel channel) throws IOException {
         log.info("监听到关单消息: closeProductOrder: {} ",orderMessage);
-        // 消息标签
-        // TODO 支付宝校验订单是否支付成功失败
+
         long msgTag = message.getMessageProperties().getDeliveryTag();
         try{
             boolean flag = productOrderService.closeProductOrder(orderMessage);

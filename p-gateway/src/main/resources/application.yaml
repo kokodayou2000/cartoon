@@ -14,24 +14,30 @@ spring:
           uri: lb://c-product-service
           order: 1
           predicates:
-            - Path=/product-server/**
+            - Path=/product-service/**
           filters:
             - StripPrefix=1
         - id: c-user-service
           uri: lb://c-user-service
           order: 2
           predicates:
-            - Path=/user-server/**
+            - Path=/user-service/**
           filters:
             - StripPrefix=1
         - id: c-file-service
           uri: lb://c-file-service
-          order: 2
+          order: 3
           predicates:
-            - Path=/file-server/**
+            - Path=/file-service/**
           filters:
             - StripPrefix=1
-
+        - id: c-order-service
+          uri: lb://c-order-service
+          order: 4
+          predicates:
+            - Path=/order-service/**
+          filters:
+            - StripPrefix=1
       discovery:
         locator:
           enabled: true

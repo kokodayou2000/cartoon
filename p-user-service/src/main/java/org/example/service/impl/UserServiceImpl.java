@@ -14,7 +14,7 @@ import org.example.interceptor.TokenCheckInterceptor;
 import org.example.model.BaseUser;
 import org.example.model.UserDO;
 import org.example.mapper.UserMapper;
-import org.example.request.UserPointReq;
+import org.example.request.UserChargeReq;
 import org.example.request.UserLoginRequest;
 import org.example.request.UserRegisterRequest;
 import org.example.service.NotifyService;
@@ -77,7 +77,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
     }
 
     @Override
-    public AjaxResult charge(UserPointReq req) {
+    public AjaxResult charge(UserChargeReq req) {
         String userId = req.getUserId();
         UserDO userDO = userMapper.selectById(userId);
         if (userDO == null){
@@ -98,7 +98,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
     }
 
     @Override
-    public AjaxResult pay(UserPointReq req) {
+    public AjaxResult pay(UserChargeReq req) {
         String userId = req.getUserId();
         UserDO userDO = userMapper.selectById(userId);
         if (userDO == null){

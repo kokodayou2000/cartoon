@@ -2,10 +2,12 @@ package org.example.controller;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.entity.ContentType;
 import org.example.config.PayUrlConfig;
 import org.example.core.AjaxResult;
+import org.example.request.ChargeReq;
 import org.example.request.ConfirmOrderRequest;
-import org.example.request.UserPointReq;
+import org.example.request.UserChargeReq;
 import org.example.service.ProductOrderService;
 import org.example.utils.JsonData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,20 +27,24 @@ public class ProductOrderController {
     @Autowired
     private PayUrlConfig payUrlConfig;
 
+    @GetMapping("/test")
+    public String test() {
+        return String.valueOf(System.currentTimeMillis());
+    }
+
     /**
      * 用户充值
      * @param req 用户id和充值金额
-     * @return
      */
     @PostMapping("/charge")
     public void charge(
-            @RequestBody UserPointReq req,
+            @RequestBody ChargeReq req,
             HttpServletResponse response
             ){
         // 确认订单
-        AjaxResult result = orderService.charge(req);
+        AjaxResult jsonData  = orderService.charge(req);
 
-        writeData(response,result);
+        writeData(response,jsonData);
     }
 
     /**
@@ -74,20 +80,19 @@ public class ProductOrderController {
     // 写入数据
     private void writeData(HttpServletResponse response, AjaxResult ajaxResult) {
         try{
-            // 设置返回头
-            response.setContentType("text/html;chartset=UTF8");
-            // 设置返回体
-            response.getWriter().write(ajaxResult.get("data").toString());
+
+            response.setContentType("text/html;charset=UTF8");
+            // 设置返回体 这个会出现 中文字符乱码
+            response.getWriter().write((String)ajaxResult.get("msg"));
             // 刷新
             response.getWriter().flush();
         }catch (IOException e){
-            log.error("响应异常");
-            e.printStackTrace();
+            log.error("响应异常 {}",e.toString());
         }finally {
             try {
                 response.getWriter().close();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                log.error("关闭响应流异常 {}",e.toString());
             }
         }
     }

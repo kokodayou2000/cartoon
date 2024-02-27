@@ -29,12 +29,12 @@ public class ProductOrderItemDO implements Serializable {
     private String outTradeNo;
 
     /**
-     * 产品id
+     * 产品id,对应章节id
      */
     private String productId;
 
     /**
-     * 商品名称
+     * 商品名称,对应章节名称
      */
     private String productName;
 
@@ -45,8 +45,8 @@ public class ProductOrderItemDO implements Serializable {
 
 
     /**
-     * 购物项商品单价
+     * 购物项商品单价 同理 price
      */
-    private BigDecimal amount;
+    private Integer amount;
 
 }

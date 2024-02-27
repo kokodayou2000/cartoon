@@ -81,5 +81,8 @@ public class ProductOrderDO implements Serializable {
      */
     private String orderType;
 
+    private int beforePoint;
+
+    private int point;
 
 }

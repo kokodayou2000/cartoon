@@ -1,22 +1,16 @@
 package org.example.request;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Set;
 
 @Data
-public class ConfirmOrderRequest {
+public class ChargeRequest {
+
 
     /**
-     * 购买的章节列表
-     */
-    private Set<String> chapterIdList;
-
-    /**
-     * 商品id
+     * 充值的id
      */
     private String shopId;
 
@@ -28,6 +22,6 @@ public class ConfirmOrderRequest {
     /**
      * 总价格
      */
-    private Integer totalAmount;
+    private BigDecimal totalAmount;
 
 }

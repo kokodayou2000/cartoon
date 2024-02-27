@@ -10,4 +10,9 @@ import java.util.List;
 public interface ProductOrderItemMapper extends BaseMapper<ProductOrderItemDO> {
 
 
+    /**
+     * 批量插入
+     * @param productOrderItemDOS
+     */
+    void insertBatch(@Param("orderItemList") List<ProductOrderItemDO> productOrderItemDOS);
 }

@@ -6,40 +6,28 @@ import lombok.Data;
 
 @Data
 public class AlipayConfig {
-    // 支付宝app id
+
+    // 使用的app是支付宝沙箱 app
     public static final String APP_ID = "9021000126620458";
 
-    // 应用私钥
-    public static final String APP_PRI_KEY = "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCccUbQhJAP5OiXHyYVDX3n3227cfKY1I0DN3/1DzGNBtaY0Vqk8pcgCmyz0p8o7zW1aPw0uOS0wmsdytSzfLAGM+mY1kV876JTleRCKxZfvTLnbO0RV7IkbOvbLDD2fcwem6/QrVO/2lBI1Q63gZSs1GSLrJdTqv/ZL9BgciGuIZogfhODLpCvb39/WBk+q3mtqSm7dSonFVK6QL8kLHHhCsDVuUt1vBQOb6mNE+ZJy5tvjIEPW2PhUAgxuCD5HNTaOBQNqnTD8yxl0cNsNrVTpmgW3Ofmfy8Ur0XsJahau2Rm11+IG6/O1UoajZhHk1X02G2HYQteDPQQeETpEccNAgMBAAECggEAUt2Fnwm4rVKZCQNMzrX4zQuCOlmfIOjlUKDjPFEx8/t9TDEIjHqbJjOfZJjaCXq7vj2/6cVOD5kz1/IKPJB9RKvWvkgxQn5EQ3YQFCRyk3/KKN9/q0ICcFzpiYyc2tPDfSsGM8i7pdHj2NBSHU2cDPfr0jg3Z/AZ2VcETzHlOTBpF/3I9rWIkVGcmHgK3JjYNvZTjqlOTgDcBa/85Y5DcZQeh8eopMzwdxlABJx4cHnkianl034EGxbENDqroW43MrbDp4rgxtwHsfhFrb7RaAgTdoM5HQNz4oqFbg/XkIfpiMVhet6KZG22/Jm8qc++H9kf7bbjPpJGHp7MyH3CWQKBgQDnHIH+p54Ro+PdcuEe6d4DYl1FPoAlPQpcNwg57/dy9jX9YJF4BDsIVp7IcU84N2hrp4g+xWDJjIwXiKQk9y7Uxe3hSEDddaBmR6uLbWsp06HD6EwT9wfONwdrCCymLHqJRL2yWNI67pLFtbfD/OJTFKWnJ01RvK/zhoXJ1DI8owKBgQCtSjpncu5C9zwP8Y7F6IRUgWCcdgTHYtgUENOloDTAnklashFjs2u9Hq2e6mJ8zYlGrNh4/3PyVK9qIGvYhT3zVEWMtXb7GanCjGnrbsB1uWGUP6AYj6qy12JjFE+S3dSVGXcf+Z1mKf1gsuHTYXJBGu9MqNuZBimCB3/a8Oz4jwKBgQC2vi74Grf9gNcT6tuhYxFfIa9YqnQPffWsNwO1NE84wwCr6mj8OnQnQr7pBde7Puy9e0pbQB0pIY5AqZYJeL66FgvkAAryUilT1sYJSKrc9u/JhexqOQIeCBtAgcU0XKVD12wcEumhGbZKyUaWnWakhQX7ZzNXN1j1ueAeWECk+wKBgH/wp8Is5qBmbN/Qlnqjut+xTaT2tXyIC8R0z+4epBP6SWo+wfv8QfU1KzaDEgfWsB2QC5r5757gy0ntefI4HY8Djv3eFGQ7hExw4trBwDKqldKgTxETMRItVySToFRsl0Eltf/TiVQeeEXmjDhGX9aVjkvo94i5NfgclVcOPccdAoGBAKI67wZoIcVPIf0w6Pv+XVJYw1gK3dsIliOk62D2fW4xLjB0ijEKv/Jylt+qZx40WWnLNIsGHPjaUpIXywUApFe5Wq88o+UeNEMSKGOUQ6sLD8g9a3j8TVYbXsb7xzZJjKmT0IMuLJsASk+NUdUYshtw4i4V3JxChHSN4GdXBclv";
 
     // 应用公钥
-    public static final String APP_PUB_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnHFG0ISQD+Tolx8mFQ19599tu3HymNSNAzd/9Q8xjQbWmNFapPKXIApss9KfKO81tWj8NLjktMJrHcrUs3ywBjPpmNZFfO+iU5XkQisWX70y52ztEVeyJGzr2yww9n3MHpuv0K1Tv9pQSNUOt4GUrNRki6yXU6r/2S/QYHIhriGaIH4Tgy6Qr29/f1gZPqt5rakpu3UqJxVSukC/JCxx4QrA1blLdbwUDm+pjRPmScubb4yBD1tj4VAIMbgg+RzU2jgUDap0w/MsZdHDbDa1U6ZoFtzn5n8vFK9F7CWoWrtkZtdfiBuvztVKGo2YR5NV9Nhth2ELXgz0EHhE6RHHDQIDAQAB";
-    public static final String SIGN_TYPE = "RSA2";
+    public static final String APP_PUB_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAloYbFX1Jq+pgAMVCSYpgALFqgBc0yUtS3TgeBkxU8eua91vtOfs5EjtqxdmTNwJQTVodMb8oiTP8+3adeMlX7L9eqhg/YBrHTLyhtyb+kbFzq1LGAmuB4+uxG+CKqdbg0JpgfnX4RdWo85Pxs6w8ZgSTqo+9rLbscuCq4A0rwwKL2OEqiGF6nIWzJR5YBWU4afVDzauoKJoMUEWTrGNyNtU2PiEBtTolN4zYGU3s0tFyGoVkkzUxwvDe6W7OCN/WYRwUZnz4u53954daZ0Ie5yB3h1218vsaM5q9kailjk5A3LH2kFYexr3eZ/i95vGMzgfbqd7fzCMPbubhiGVOcwIDAQAB";
 
+    // 应用私钥
+    public static final String APP_PRI_KEY = "MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCWhhsVfUmr6mAAxUJJimAAsWqAFzTJS1LdOB4GTFTx65r3W+05+zkSO2rF2ZM3AlBNWh0xvyiJM/z7dp14yVfsv16qGD9gGsdMvKG3Jv6RsXOrUsYCa4Hj67Eb4Iqp1uDQmmB+dfhF1ajzk/GzrDxmBJOqj72stuxy4KrgDSvDAovY4SqIYXqchbMlHlgFZThp9UPNq6gomgxQRZOsY3I21TY+IQG1OiU3jNgZTezS0XIahWSTNTHC8N7pbs4I39ZhHBRmfPi7nf3nh1pnQh7nIHeHXbXy+xozmr2RqKWOTkDcsfaQVh7Gvd5n+L3m8YzOB9up3t/MIw9u5uGIZU5zAgMBAAECggEAPkEOuI+NxbV0qTzsUoARfpfiBUITyeEGT4ojGNW/GCMqf32cmqtlij3axiNbeJfTYHqRsn5uJHjE+7euH0OewsLPQyguJfBNV1Z4x8gv50/uGABu9pdCLGLRaEcw8ld1ubDvkb32xeM9MiiRAY+Nl1/zNsqmVuV823JCGdI4tDkZhMtatnIeCCC1zavQZsdM/X8VybcTwVu/Y7eRv7cn3LOueNUJFcoUXwh3my906i402WbNguc0dB/iufoHVFauXknGA4jPL5XZNVgQf8LGntiL+nwKadehPSEEEq2kjH7GW8wb4sOMbjadRwrTdVqAYN7KsLCr3KJ22XAVgJ2moQKBgQDT+UHhNwov/U9L/611f0BZPgUKIRpKOglIW5XQVBBL7pawbPR3OC/XIkcdUoeQchbfzxuK0gyqIcMuc3LK/FrnnCs91Qp/H0Yo/SN6fW2gaQ5UvV9bBHcC9TF5rloN4BbVS3RK2rFUyy4shjaqYojfzM9x8FKaJRD0IKkTDE0agwKBgQC1yYg6GqhQQhSLTBLXwFrXXNyKLHENTrB+JS+OPAd7b/uMYFeZsjZwVpDDGb8T9+Z9QWCCtHxz1vj6w5ghefcHLyyLhtU7ZPfbKCC+K0BSPOjwhhXruvToV+tHnK6MjaXeVaZIp3j0PaB+D89LTkDIoI09jnxj5rmrvsHkWih5UQKBgQDAx9ldjSQLvxHmKXLFAGUyhJAqxS5WwW99yiV3IWzs0eFkNMMkxgnkW31Xsp4uBUS+aWpAF4aDGE+dqEuHRnkaWVKOWnnAYV36mzYwCXCxSbpJ4Sye53GhVAOaCbJHGj1J4OSzyy8p0dt9jNacoR6gg3FKy2kkXX+Mt0NtWmupJwKBgQCtzeCMRR51lahUwkgltYhk7ikBhpoUMg72nJEKOYSh1SA5R4eZsFTyNSG1F3GkItlhGleuv+dZTcjA4K8cGqM/YDADusc2QUPkakpb57hYqFnCVUCyIA618hFGZ5xPT8Ktf1A7mLtBMYa34F++TTQNXcuMdiWh0l/kv75bmIOn8QKBgQCIQgzZj7bmLOvCog0YUx+mdhOI+/EqwRdBiBvMHNo/qkMN8D0yBYRPLhT4vGLTmKVm/G5fhNo1F6iNs97iYclj5QdcWL3kcJT7SSA7JX84ZP13dLW+v+pP53jk5enMEfdUzWsMV7Jik5kMK+vzc0dEd7htYNxjnEKl9/42a1VfNQ==";
+
+    // 支付宝公钥
     public static final String ALIPAY_PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgzOnZ97e+xPgjG0YVHDR+EoTvK3HiwsGR3VSlVSiFStSgC9Ck1BSBMS7Xo3gMX59YUHHHtxQEooT+rkTv8Xftof45vOFyZxRcRtpEUjrakjNiuaWwOT46cMkgcqcOf/+5gok8RQIr5618SijmBc6WLBdyYwMFmlh0engXaOt88R8OdQGeWd68ie6WWt8drXvawrN98484Xl0oz1J1VtmwCxV8mR9gsM/AR8ceWFCqH0LVYFfGCneExrN8jNeQFB4Vh2s4yCORDmMH1B3Zv5WSxO57SRU76AxQutDSaWNZul/vS5csgwjo5GuaH1Hs+qFn7AnSNmPrQ9kKnVvGnxoUwIDAQAB";
+
+    public static final String SIGN_TYPE = "RSA2";
 
     public static final String CHARSET = "UTF-8";
 
     public static final String FORMAT = "JSON";
 
-    public static final String ALIPAY_GATEWAY = "https://openapi-sandbox.dl.alipaydev.com/gateway.do";    // 支付宝app id
+    public static final String ALIPAY_GATEWAY = "https://openapi-sandbox.dl.alipaydev.com/gateway.do";
 
-//    public static final String APP_ID = "xxxx";
-//
-//    // 应用私钥
-//    public static final String APP_PRI_KEY = "xxx";
-//
-//    // 应用公钥
-//    public static final String APP_PUB_KEY = "xxxx";
-//    public static final String SIGN_TYPE = "RSA2";
-//
-//    public static final String ALIPAY_PUBLIC_KEY = "";
-//
-//    public static final String CHARSET = "UTF-8";
-//
-//    public static final String FORMAT = "JSON";
-//
-//    public static final String ALIPAY_GATEWAY = "https://openapi-sandbox.dl.alipaydev.com/gateway.do";
 
     private AlipayConfig(){}
 
@@ -49,7 +37,15 @@ public class AlipayConfig {
         if (instance == null){
             synchronized (AlipayConfig.class){
                 if (instance == null)  {
-                    instance = new DefaultAlipayClient(ALIPAY_GATEWAY,APP_ID,APP_PRI_KEY,FORMAT,CHARSET,APP_PUB_KEY,SIGN_TYPE);
+                    instance = new DefaultAlipayClient(
+                            ALIPAY_GATEWAY,
+                            APP_ID,
+                            APP_PRI_KEY,
+                            "json",
+                            "utf-8",
+                            ALIPAY_PUBLIC_KEY,
+                            "RSA2"
+                    );
                 }
             }
         }

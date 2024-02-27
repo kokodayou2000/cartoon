@@ -1,8 +1,7 @@
 package org.example.feign;
 
 import org.example.core.AjaxResult;
-import org.example.request.UserPointReq;
-import org.example.utils.JsonData;
+import org.example.request.UserChargeReq;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +14,7 @@ public interface UserFeignService {
     // 充值
     @PostMapping("/api/v1/user/charge")
     public AjaxResult charge(
-            @RequestBody UserPointReq req
+            @RequestBody UserChargeReq req
             );
 
     // 查看用户剩余 point
@@ -27,6 +26,6 @@ public interface UserFeignService {
     // 支付
     @PostMapping("/api/v1/user/pay")
     public AjaxResult pay(
-            @RequestBody UserPointReq req
+            @RequestBody UserChargeReq req
     );
 }

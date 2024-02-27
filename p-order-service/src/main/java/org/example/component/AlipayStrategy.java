@@ -1,7 +1,10 @@
 package org.example.component;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
+import com.alipay.api.AlipayClient;
+import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.alipay.api.request.AlipayTradeQueryRequest;
 import com.alipay.api.request.AlipayTradeWapPayRequest;
@@ -30,13 +33,13 @@ public class AlipayStrategy implements PayStrategy {
     // 统一下单接口
     @Override
     public String unifiedOrder(PayInfoVO payInfoVO) {
-        HashMap<String, String> content = new HashMap<>();
-        content.put("out_trade_no",payInfoVO.getOutTradeNo());
-        content.put("product_code","FAST_INSTANCE_TRADE_PAY");
+        JSONObject bizContent = new JSONObject();
+        bizContent.put("out_trade_no",payInfoVO.getOutTradeNo());
+        bizContent.put("product_code","FAST_INSTANCE_TRADE_PAY");
         // 订单总金额
-        content.put("total_amount",payInfoVO.getPayFee().toString());
-        content.put("subject",payInfoVO.getTitle());
-        content.put("body",payInfoVO.getDescription());
+        bizContent.put("total_amount",payInfoVO.getPayFee());
+        bizContent.put("subject",payInfoVO.getTitle());
+        bizContent.put("body",payInfoVO.getDescription());
         // 得到单位是分钟
         double timeout = Math.floor(payInfoVO.getOrderPayTimeoutMills())/(1000*60);
 
@@ -45,13 +48,14 @@ public class AlipayStrategy implements PayStrategy {
             throw new BizException(BizCodeEnum.PAY_ORDER_PAY_TIMEOUT);
         }
         // 可能用户在支付二维码页面停留过多时间，功能是为了避免逾期
-        content.put("timeout_express",Double.valueOf(timeout).intValue()+"m");
+        bizContent.put("timeout_express",Double.valueOf(timeout).intValue()+"m");
         String clientType = payInfoVO.getClientType();
         String form = "";
+        log.info("支付方式: {}",clientType);
         try{
             if (clientType.equalsIgnoreCase(ClientType.H5.name())){
                 AlipayTradeWapPayRequest request = new AlipayTradeWapPayRequest();
-                request.setBizContent(JSON.toJSONString(content));
+                request.setBizContent(bizContent.toJSONString());
                 request.setNotifyUrl(urlConfig.getAlipayCallBackURL());
                 request.setReturnUrl(urlConfig.getAlipaySuccessReturnURL());
                 // 发送请求
@@ -65,7 +69,7 @@ public class AlipayStrategy implements PayStrategy {
             }else if (clientType.equalsIgnoreCase(ClientType.WEB.name())) {
                 // PC 支付
                 AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
-                request.setBizContent(JSON.toJSONString(content));
+                request.setBizContent(bizContent.toJSONString());
                 request.setNotifyUrl(urlConfig.getAlipayCallBackURL());
                 request.setReturnUrl(urlConfig.getAlipaySuccessReturnURL());
                 // 发送请求
@@ -87,6 +91,7 @@ public class AlipayStrategy implements PayStrategy {
         return PayStrategy.super.refund(payInfoVO);
     }
 
+    // 查询订单支付是否成功 -> 支付宝服务器
     @Override
     public String queryPaySuccess(PayInfoVO payInfoVO) {
         // 查询支付状态

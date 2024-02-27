@@ -23,7 +23,7 @@ public class interceptorConfig  implements WebMvcConfigurer {
                 .addPathPatterns("/api/v1/order/*/**")
                 //文件上传和用户注册都不需要进行token验证
                 .excludePathPatterns(
-                        "/api/v1/order/*/register"
+                        "/api/v1/order/test"
                 );
 
     }

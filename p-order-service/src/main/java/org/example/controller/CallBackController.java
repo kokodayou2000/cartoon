@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.config.AlipayConfig;
 import org.example.core.AjaxResult;
 import org.example.enums.ProductOrderPayTypeEnum;
+import org.example.feign.UserFeignService;
 import org.example.service.ProductOrderService;
 import org.example.utils.JsonData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,8 @@ public class CallBackController {
             if (signVerified){
                 // 支付回调，这个接口是通用的
                 AjaxResult result = productOrderService.handlerOrderCallbackMsg(ProductOrderPayTypeEnum.ALIPAY,paramsToMap);
+                // TODO 创建一个支付记录
+                // 记录本次的支付成功
                 if (Objects.equals(String.valueOf(result.get("code")), "200")){
                     return "success";
                 }

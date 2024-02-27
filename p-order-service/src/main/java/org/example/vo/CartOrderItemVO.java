@@ -1,27 +1,17 @@
 package org.example.vo;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 public class CartOrderItemVO {
 
-    @JsonProperty("product_id")
-    private Long productId;
+    // 章节 id 列表
+    private List<String> chapterList;
 
-    @JsonProperty("by_num")
-    private Integer byNum;
+    // 漫画 id
+    private String cartoonId;
 
-    @JsonProperty("product_title")
-    private String productTitle;
-
-    @JsonProperty("product_img")
-    private String productImg;
-
-    private BigDecimal amount;
-
-    @JsonProperty("total_amount")
-    private BigDecimal totalAmount;
 }

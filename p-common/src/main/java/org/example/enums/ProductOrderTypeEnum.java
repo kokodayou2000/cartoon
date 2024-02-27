@@ -5,8 +5,9 @@ public enum ProductOrderTypeEnum {
      * 普通订单
      */
     DAILY,
+
     /**
-     * 促销订单
+     * 充值订单
      */
-    PROMOTION;
+    CHARGE;
 }

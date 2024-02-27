@@ -2,7 +2,7 @@ package org.example.controller;
 
 
 import org.example.core.AjaxResult;
-import org.example.request.UserPointReq;
+import org.example.request.UserChargeReq;
 import org.example.request.UserLoginRequest;
 import org.example.request.UserRegisterRequest;
 import org.example.service.UserService;
@@ -29,7 +29,7 @@ public class UserController {
     // 充值
     @PostMapping("/charge")
     public AjaxResult charge(
-            @RequestBody UserPointReq req
+            @RequestBody UserChargeReq req
     ){
         return userService.charge(req);
     }
@@ -44,7 +44,7 @@ public class UserController {
     // 充值
     @PostMapping("/pay")
     public AjaxResult pay(
-            @RequestBody UserPointReq req
+            @RequestBody UserChargeReq req
     ){
         return userService.pay(req);
     }
