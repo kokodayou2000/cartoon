@@ -1,0 +1,1224 @@
+{
+	"info": {
+		"_postman_id": "7b75266a-f876-41a0-ad58-7ed353f60e20",
+		"name": "cartoonAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28452835"
+	},
+	"item": [
+		{
+			"name": "用户服务",
+			"item": [
+				{
+					"name": "获取登录验证码",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{user-service}}/api/v1/notify/getChapter",
+							"host": [
+								"{{user-service}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"notify",
+								"getChapter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "注册成功邮箱提醒服务",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{user-service}}/api/v1/notify/sendCode?to=kokodayou2000@126.com&captcha=5634",
+							"host": [
+								"{{user-service}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"notify",
+								"sendCode"
+							],
+							"query": [
+								{
+									"key": "to",
+									"value": "kokodayou2000@126.com"
+								},
+								{
+									"key": "captcha",
+									"value": "5634"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "用户注册",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"code\": \"2311\",\r\n  \"head_img\": \"string\",\r\n  \"mail\": \"kokodayou2000@126.com\",\r\n  \"name\": \"分布式事务测试\",\r\n  \"pwd\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{user-service}}/api/user/v1/register",
+							"host": [
+								"{{user-service}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"v1",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "用户登录",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"mail\": \"kokodayou2000@126.com\",\r\n  \"pwd\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{user-service}}/api/v1/user/login",
+							"host": [
+								"{{user-service}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "用户详情",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{user-service}}api/v1//user/detail",
+							"host": [
+								"{{user-service}}api"
+							],
+							"path": [
+								"v1",
+								"",
+								"user",
+								"detail"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "上传头像",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/03062/Pictures/Camera Roll/1984.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{user-service}}/api/v1/user/avatar",
+							"host": [
+								"{{user-service}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"avatar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "文件服务",
+			"item": [
+				{
+					"name": "上传测试",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/03062/Pictures/Camera Roll/10407524.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{file-service}}/api/v1/file/upload",
+							"host": [
+								"{{file-service}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"file",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "测试",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/03062/Pictures/Camera Roll/1984.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{file-service}}/api/v1/file/upload1",
+							"host": [
+								"{{file-service}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"file",
+								"upload1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "漫画服务",
+			"item": [
+				{
+					"name": "banner",
+					"item": [
+						{
+							"name": "获取轮播图",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{product-service}}/api/v1/banner/list",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"banner",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "获取全部的轮播图",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{product-service}}/api/v1/banner/listAll",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"banner",
+										"listAll"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "上传轮播图",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/C:/Users/03062/Pictures/Camera Roll/13653959.png"
+										},
+										{
+											"key": "id",
+											"value": "123",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{product-service}}/api/v1/banner/uploadBanner",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"banner",
+										"uploadBanner"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "设置轮播图状态",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{            \r\n    \"bannerId\":\"7920667346\",\r\n    \"active\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{product-service}}/api/v1/banner/status",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"banner",
+										"status"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "cartoon",
+					"item": [
+						{
+							"name": "漫画列表",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{product-service}}/api/v1/cartoon/list/price/0/10",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cartoon",
+										"list",
+										"price",
+										"0",
+										"10"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "查看漫画",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\":\"鬼灭之刃\",\r\n    \"introduction\":\"日本漫画\",\r\n    \"price\": 49,\r\n    \"tags\":[\"少年漫\",\"战斗\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{product-service}}/api/v1/cartoon/cartoonInfo/4824535991",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cartoon",
+										"cartoonInfo",
+										"4824535991"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "创建漫画",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\":\"间谍过家家\",\r\n    \"introduction\":\"搞笑漫画\",\r\n    \"price\": 100,\r\n    \"tags\":[\"亲情\",\"战斗\",\"搞笑\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{product-service}}/api/v1/cartoon/createCartoon",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cartoon",
+										"createCartoon"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "上传漫画封面",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/C:/Users/03062/Desktop/协作漫画/data/间谍过家家/title.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{product-service}}/api/v1/cartoon/uploadCoverImg/4051564729",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cartoon",
+										"uploadCoverImg",
+										"4051564729"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "更新漫画信息",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"4824535991\",\r\n    \"title\": \"鬼灭之刃-plus\",\r\n    \"introduction\": \"日本漫画\",    \r\n    \"tags\": [\r\n        \"少年漫\",\r\n        \"战斗\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{product-service}}/api/v1/cartoon/updateCartoonInfo",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cartoon",
+										"updateCartoonInfo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "新增协作对象",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"cartoonId\": \"4824535991\",\r\n    \"patternId\": \"4824535991\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{product-service}}/api/v1/cartoon/addPattern",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cartoon",
+										"addPattern"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "查看我创建的",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\":\"鬼灭之刃\",\r\n    \"introduction\":\"日本漫画\",\r\n    \"price\": 49,\r\n    \"tags\":[\"少年漫\",\"战斗\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{product-service}}/api/v1/cartoon/meCreate",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cartoon",
+										"meCreate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "查看我加入的",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\":\"鬼灭之刃\",\r\n    \"introduction\":\"日本漫画\",\r\n    \"price\": 49,\r\n    \"tags\":[\"少年漫\",\"战斗\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{product-service}}/api/v1/cartoon/meJoin",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cartoon",
+										"meJoin"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "chapter",
+					"item": [
+						{
+							"name": "查询章节",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{product-service}}/api/v1/chapter/chapterInfo/0189333677",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"chapter",
+										"chapterInfo",
+										"0189333677"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "创建章节",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\r\n    \"cartoonId\": \"4051564729\",\r\n    \"num\":1,\r\n    \"free\":true,\r\n    \"title\":\"MISSION 1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{product-service}}/api/v1/chapter/createChapter",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"chapter",
+										"createChapter"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "修改章节",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\r\n    \"id\":\"8631704597\",\r\n    \"num\":4,    \r\n    \"title\":\"碳治郎日记-前篇\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{product-service}}/api/v1/chapter/updateChapterInfo",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"chapter",
+										"updateChapterInfo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "添加章节",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\r\n    \"chapterId\":\"8631704597\",\r\n    \"patternId\":\"tset\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{product-service}}/api/v1/chapter/addChapterPattern",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"chapter",
+										"addChapterPattern"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "paper",
+					"item": [
+						{
+							"name": "创建paper一次完成",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/C:/Users/03062/Desktop/协作漫画/data/鬼灭之刃/1/1.png"
+										},
+										{
+											"key": "chapterId",
+											"value": "7193564663",
+											"type": "text"
+										},
+										{
+											"key": "num",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "patterns",
+											"value": "abc",
+											"type": "text"
+										},
+										{
+											"key": "info",
+											"value": "第一张，由a-b-c协作完成的",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{product-service}}/api/v1/paper/uploadPaper",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"paper",
+										"uploadPaper"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "上传paper",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/C:/Users/03062/Desktop/协作漫画/data/间谍过家家/1/2.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{product-service}}/api/v1/paper/uploadPaper",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"paper",
+										"uploadPaper"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "创建paper",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"chapterId\":\"0189333677\",\r\n    \"num\":2,\r\n    \"url\":\"http://127.0.0.1:9000/cartoon/CMIUXlgvOS.png\",\r\n    \"info\":\"我创建的\",\r\n    \"partners\":[\"1760639458694148098\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{product-service}}/api/v1/paper/createPaper",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"paper",
+										"createPaper"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "与我相关的",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{product-service}}/api/v1/paper/meCreate",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"paper",
+										"meCreate"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "订单服务",
+			"item": [
+				{
+					"name": "充值",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \r\n    \"chargeId\":\"3\",\r\n    \"clientType\": \"H5\"\r\n}\r\n    ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{order-service}}/api/v1/order/charge",
+							"host": [
+								"{{order-service}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"order",
+								"charge"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "me Shopping",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{order-service}}/api/v1/chapter/buyList",
+							"host": [
+								"{{order-service}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"chapter",
+								"buyList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "章节销售情况",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{order-service}}/api/v1/chapter/payList/7193564663",
+							"host": [
+								"{{order-service}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"chapter",
+								"payList",
+								"7193564663"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "用户使用点数购买漫画",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \r\n    \"chapterIdList\":[\"6371454567\",\"7193564663\"],\r\n    \"cartoonId\":\"4824535991\",\r\n    \"clientType\": \"H5\",\r\n    \"payType\":\"ALIPAY\",\r\n    \"totalAmount\":\"79\"\r\n}\r\n    ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{order-service}}/api/v1/order/userBuy",
+							"host": [
+								"{{order-service}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"order",
+								"userBuy"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询订单状态",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \r\n    \"chapterIdList\":[\"0189333677\"],\r\n    \"cartoonId\":\"4051564729\",\r\n    \"clientType\": \"H5\",\r\n    \"payType\":\"ALIPAY\",\r\n    \"totalAmount\":\"79\"\r\n}\r\n    ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{order-service}}/api/v1/order/orderState/",
+							"host": [
+								"{{order-service}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"order",
+								"orderState",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "远程测试1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://hb5ougo7rww1.ngrok.xiaomiqiu123.top/order-service/api/v1/order/test",
+					"protocol": "https",
+					"host": [
+						"hb5ougo7rww1",
+						"ngrok",
+						"xiaomiqiu123",
+						"top"
+					],
+					"path": [
+						"order-service",
+						"api",
+						"v1",
+						"order",
+						"test"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "user-service",
+			"value": "localhost:7001",
+			"type": "string"
+		},
+		{
+			"key": "file-service",
+			"value": "localhost:7002",
+			"type": "string"
+		},
+		{
+			"key": "product-service",
+			"value": "localhost:7003",
+			"type": "string"
+		},
+		{
+			"key": "order-service",
+			"value": "localhost:7004",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "p-projecteyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwcm9qZWN0IiwiaWQiOiIxNzYwNjM5NDU4Njk0MTQ4MDk4IiwibmFtZSI6IuWIhuW4g-W8j-S6i-WKoea1i-ivlSIsIm1haWwiOiJrb2tvZGF5b3UyMDAwQDEyNi5jb20iLCJpYXQiOjE3MDg2MDQxNTMsImV4cCI6MTcwOTIwODk1M30.UlLBcdXugH1W-qTzSQIC1zwCFW-uLXXIXsWp4gbwOuI",
+			"type": "string"
+		}
+	]
+}

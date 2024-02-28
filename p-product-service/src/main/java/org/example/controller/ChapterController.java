@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import org.example.core.AjaxResult;
+import org.example.model.ChapterDO;
 import org.example.request.AddChapterPatternReq;
 import org.example.request.CreateCartoonReq;
 import org.example.request.CreateChapterReq;
@@ -9,6 +10,8 @@ import org.example.service.ICartoonService;
 import org.example.service.IChapterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/chapter")
@@ -30,6 +33,7 @@ public class ChapterController {
     ){
         return chapterService.chapterInfo(chapterId);
     }
+
 
     /**
      * 创建章节

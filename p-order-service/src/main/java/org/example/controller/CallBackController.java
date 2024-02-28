@@ -34,6 +34,7 @@ public class CallBackController {
     // 支付宝那边调用的
     @PostMapping("/alipay")
     public String alipayCallback(HttpServletRequest request, HttpServletResponse response){
+
         // 讲异步通知中收到的所有参数存储到map中
         Map<String, String> paramsToMap = convertRequestParamsToMap(request);
         // 支付宝回调通知结果

@@ -21,9 +21,12 @@ public class interceptorConfig  implements WebMvcConfigurer {
         // path /api/<model>/<version>/<action>/
         registry.addInterceptor(loginInterceptor())
                 .addPathPatterns("/api/v1/order/*/**")
+                .addPathPatterns("/api/v1/chapterItem/*/**")
                 //文件上传和用户注册都不需要进行token验证
                 .excludePathPatterns(
-                        "/api/v1/order/test"
+                        "/api/v1/order/test",
+                        "/api/v1/chapterItem/payList/*",
+                        "/api/v1/chapterItem/benefits/*"
                 );
 
     }

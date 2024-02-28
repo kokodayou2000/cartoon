@@ -1,14 +1,11 @@
 package org.example.request;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
-import java.math.BigDecimal;
-import java.util.List;
 import java.util.Set;
 
 @Data
-public class ConfirmOrderRequest {
+public class UserBuyChapterRequest {
 
     /**
      * 购买的章节列表
@@ -16,10 +13,17 @@ public class ConfirmOrderRequest {
     private Set<String> chapterIdList;
 
     /**
-     * 商品id
+     * 漫画id
      */
-    private String shopId;
+    private String cartoonId;
 
+    /**
+     * 漫画名称
+     */
+    private String cartoonName;
+
+    // 客户端平台
+    private String clientType;
     /**
      * 支付方式
      */

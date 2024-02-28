@@ -7,46 +7,33 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-@TableName("product_order_item")
-public class ProductOrderItemDO implements Serializable {
+@TableName("chapter_item")
+public class ChapterItemDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    /**
-     * 订单号
-     */
-    private Long productOrderId;
 
+    private String userId;
+
+    private String cartoonId;
+
+    private String chapterId;
+
+    private String chapterName;
+
+    private String status;
 
     private String outTradeNo;
 
-    /**
-     * 产品id,对应章节id
-     */
-    private String productId;
-
-    /**
-     * 商品名称,对应章节名称
-     */
-    private String productName;
-
-    /**
-     * 创建时间
-     */
     private Date createTime;
 
-
-    /**
-     * 购物项商品单价 同理 price
-     */
-    private Integer amount;
+    private Integer price;
 
 }

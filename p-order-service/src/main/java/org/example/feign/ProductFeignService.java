@@ -22,4 +22,9 @@ public interface ProductFeignService {
     public AjaxResult sales(
             @RequestBody CartoonSaleNumReq req
     );
+
+    @GetMapping("/api/v1/chapter/chapterInfo/{chapterId}")
+    public AjaxResult chapterInfo(
+            @PathVariable("chapterId") String chapterId
+    );
 }

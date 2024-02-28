@@ -102,6 +102,7 @@ public class AlipayStrategy implements PayStrategy {
         request.setNotifyUrl(JSON.toJSONString(content));
         AlipayTradeQueryResponse response = null;
         try {
+            // TODO 这里假如用户并没有付款，就会出现一些 ERROR 但是程序能正常执行
             response = AlipayConfig.getInstance().execute(request);
             log.info("订单查询响应: {}",response.getBody());
         } catch (AlipayApiException e) {
