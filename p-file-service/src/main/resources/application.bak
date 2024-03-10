@@ -35,10 +35,10 @@ logging:
 
 aliyun:
   oss:
-    endpoint: oss-cn-beijing.aliyuncs.com
-    access-key-id: LTAI5tHw8XzvHiyyDB4uT8sM
-    access-key-secret: Dz5hNYeF6wJzXtVoJ8kzCit8Qyy8gT
-    bucket-name: tute-chat
+    endpoint: test
+    access-key-id: test
+    access-key-secret: test
+    bucket-name: test
 
 
 

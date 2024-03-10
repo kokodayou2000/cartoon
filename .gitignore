@@ -4,11 +4,21 @@ target/
 !**/src/test/**/target/
 
 p-common/.gitignore
-p-coupon-service/.gitignore
+
 p-gateway/.gitignore
+p-gateway/src/main/resources/application.bak
+
 p-order-service/.gitignore
+p-order-service/src/main/resources/application.bak
+
 p-user-service/.gitignore
+p-user-service/src/main/resources/application.bak
+
 p-product-service/.gitignore
+p-product-service/src/main/resources/application.bak
+
+p-file-service/.gitignore
+p-file-service/src/main/resources/application.bak
 
 .idea/*.xml
 

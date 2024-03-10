@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: c-user-service
+  cloud:
+    nacos:
+      config:
+        server-addr: 10.12.0.143:8848
+        file-extension: yaml
+  profiles:
+    active: dev
