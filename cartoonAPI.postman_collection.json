@@ -95,7 +95,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"mail\": \"kokodayou2000@126.com\",\r\n  \"pwd\": \"123\"\r\n}",
+							"raw": "{\r\n  \"mail\": \"0306201202@tute.edu.cn\",\r\n  \"pwd\": \"123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -129,11 +129,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{user-service}}api/v1//user/detail",
+							"raw": "{{user-service}}/api/v1//user/detail",
 							"host": [
-								"{{user-service}}api"
+								"{{user-service}}"
 							],
 							"path": [
+								"api",
 								"v1",
 								"",
 								"user",
@@ -167,7 +168,7 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "/C:/Users/03062/Pictures/Camera Roll/1984.jpg"
+									"src": "/C:/Users/03062/Pictures/Camera Roll/10407524.png"
 								}
 							]
 						},
@@ -181,6 +182,80 @@
 								"v1",
 								"user",
 								"avatar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "批量查询用户信息",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    \"2132234131231232131\",\r\n    \"1760639458694148098\"\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{user-service}}/api/v1/user/batchSearch",
+							"host": [
+								"{{user-service}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"batchSearch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询用户是否存在",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    \"2132234131231232131\",\r\n    \"1760639458694148098\"\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{user-service}}/api/v1/user/exist/1760639458694148098",
+							"host": [
+								"{{user-service}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"exist",
+								"1760639458694148098"
 							]
 						}
 					},
@@ -318,18 +393,24 @@
 							"name": "上传轮播图",
 							"request": {
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "formdata",
 									"formdata": [
 										{
 											"key": "file",
 											"type": "file",
-											"src": "/C:/Users/03062/Pictures/Camera Roll/13653959.png"
+											"src": "/C:/Users/03062/Desktop/协作漫画/data/banner/b1.png"
 										},
 										{
 											"key": "id",
-											"value": "123",
+											"value": "2354675214",
 											"type": "text"
 										}
 									]
@@ -407,6 +488,60 @@
 							"response": []
 						},
 						{
+							"name": "单章节漫画价格",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{product-service}}/api/v1/cartoon/price/2354675214",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cartoon",
+										"price",
+										"2354675214"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "漫画信息",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{product-service}}/api/v1/cartoon/cartoonInfo/2354675214",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cartoon",
+										"cartoonInfo",
+										"2354675214"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "查看漫画",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
@@ -431,7 +566,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{product-service}}/api/v1/cartoon/cartoonInfo/4824535991",
+									"raw": "{{product-service}}/api/v1/cartoon/cartoonInfo/2354675214",
 									"host": [
 										"{{product-service}}"
 									],
@@ -440,7 +575,7 @@
 										"v1",
 										"cartoon",
 										"cartoonInfo",
-										"4824535991"
+										"2354675214"
 									]
 								}
 							},
@@ -498,12 +633,12 @@
 										{
 											"key": "file",
 											"type": "file",
-											"src": "/C:/Users/03062/Desktop/协作漫画/data/间谍过家家/title.png"
+											"src": "/C:/Users/03062/Desktop/协作漫画/data/全职猎人/title.png"
 										}
 									]
 								},
 								"url": {
-									"raw": "{{product-service}}/api/v1/cartoon/uploadCoverImg/4051564729",
+									"raw": "{{product-service}}/api/v1/cartoon/uploadCoverImg/2354675214",
 									"host": [
 										"{{product-service}}"
 									],
@@ -512,7 +647,7 @@
 										"v1",
 										"cartoon",
 										"uploadCoverImg",
-										"4051564729"
+										"2354675214"
 									]
 								}
 							},
@@ -531,7 +666,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id\": \"4824535991\",\r\n    \"title\": \"鬼灭之刃-plus\",\r\n    \"introduction\": \"日本漫画\",    \r\n    \"tags\": [\r\n        \"少年漫\",\r\n        \"战斗\"\r\n    ]\r\n}",
+									"raw": "",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -566,7 +701,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"cartoonId\": \"4824535991\",\r\n    \"patternId\": \"4824535991\"\r\n}",
+									"raw": "{\r\n    \"cartoonId\": \"2354675214\",\r\n    \"patternId\": \"2132234131231232131\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -663,6 +798,45 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "查看漫画参与者列表",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\":\"鬼灭之刃\",\r\n    \"introduction\":\"日本漫画\",\r\n    \"price\": 49,\r\n    \"tags\":[\"少年漫\",\"战斗\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{product-service}}/api/v1/cartoon/cartoonPatternList/2354675214",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cartoon",
+										"cartoonPatternList",
+										"2354675214"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -670,12 +844,18 @@
 					"name": "chapter",
 					"item": [
 						{
-							"name": "查询章节",
+							"name": "根据章节id，查询章节下的paper",
 							"request": {
 								"method": "GET",
-								"header": [],
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
 								"url": {
-									"raw": "{{product-service}}/api/v1/chapter/chapterInfo/0189333677",
+									"raw": "{{product-service}}/api/v1/chapter/chapterInfo/9610511337",
 									"host": [
 										"{{product-service}}"
 									],
@@ -684,7 +864,7 @@
 										"v1",
 										"chapter",
 										"chapterInfo",
-										"0189333677"
+										"9610511337"
 									]
 								}
 							},
@@ -703,7 +883,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n\r\n    \"cartoonId\": \"4051564729\",\r\n    \"num\":1,\r\n    \"free\":true,\r\n    \"title\":\"MISSION 1\"\r\n}",
+									"raw": "{\r\n\r\n    \"cartoonId\": \"2354675214\",\r\n    \"num\":4,\r\n    \"free\":false,    \r\n    \"title\":\"004 魔兽凶狐狸\",\r\n    \"info\":\"主角balabala..\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -761,7 +941,7 @@
 							"response": []
 						},
 						{
-							"name": "添加章节",
+							"name": "修改章节状态",
 							"request": {
 								"method": "POST",
 								"header": [
@@ -773,7 +953,42 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n\r\n    \"chapterId\":\"8631704597\",\r\n    \"patternId\":\"tset\"\r\n}",
+									"raw": "{\r\n\r\n    \"chapterId\":\"9610511337\",\r\n    \"status\":\"finished\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{product-service}}/api/v1/chapter/updateChapterStatus",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"chapter",
+										"updateChapterStatus"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "添加章节参与者",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\r\n    \"chapterId\":\"9610511337\",\r\n    \"patternId\":\"2132234131231232131\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -794,6 +1009,33 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "章节参与者列表",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{product-service}}/api/v1/chapter/chapterPatternList/9610511337",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"chapter",
+										"chapterPatternList",
+										"9610511337"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -801,13 +1043,72 @@
 					"name": "paper",
 					"item": [
 						{
-							"name": "创建paper一次完成",
+							"name": "根据章节id获取排序后的list",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{product-service}}/api/v1/paper/list/9610511337",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"paper",
+										"list",
+										"9610511337"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "根据漫画id，获取参与者信息",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{product-service}}/api/v1/paper/patternInfo/2354675214",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"paper",
+										"patternInfo",
+										"2354675214"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "collaborate",
+					"item": [
+						{
+							"name": "上传到临时存储中",
 							"request": {
 								"method": "POST",
 								"header": [
 									{
 										"key": "token",
-										"value": "{{token}}",
+										"value": "{{user1}}",
 										"type": "text"
 									}
 								],
@@ -817,49 +1118,37 @@
 										{
 											"key": "file",
 											"type": "file",
-											"src": "/C:/Users/03062/Desktop/协作漫画/data/鬼灭之刃/1/1.png"
-										},
-										{
-											"key": "chapterId",
-											"value": "7193564663",
-											"type": "text"
-										},
-										{
-											"key": "num",
-											"value": "1",
-											"type": "text"
-										},
-										{
-											"key": "patterns",
-											"value": "abc",
-											"type": "text"
+											"src": "/C:/Users/03062/Desktop/协作漫画/data/全职猎人/1/4.png"
 										},
 										{
 											"key": "info",
-											"value": "第一张，由a-b-c协作完成的",
+											"value": "创作信息",
 											"type": "text"
 										}
 									]
 								},
 								"url": {
-									"raw": "{{product-service}}/api/v1/paper/uploadPaper",
+									"raw": "{{product-service}}/api/v1/collaborate/uploadPaperTemp",
 									"host": [
 										"{{product-service}}"
 									],
 									"path": [
 										"api",
 										"v1",
-										"paper",
-										"uploadPaper"
+										"collaborate",
+										"uploadPaperTemp"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "上传paper",
+							"name": "获取我上传的",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
 							"request": {
-								"method": "POST",
+								"method": "GET",
 								"header": [
 									{
 										"key": "token",
@@ -873,27 +1162,144 @@
 										{
 											"key": "file",
 											"type": "file",
-											"src": "/C:/Users/03062/Desktop/协作漫画/data/间谍过家家/1/2.png"
+											"src": "/C:/Users/03062/Desktop/协作漫画/data/全职猎人/1/1.png"
+										},
+										{
+											"key": "info",
+											"value": "封面图",
+											"type": "text"
 										}
 									]
 								},
 								"url": {
-									"raw": "{{product-service}}/api/v1/paper/uploadPaper",
+									"raw": "{{product-service}}/api/v1/collaborate/meCreateTemp",
 									"host": [
 										"{{product-service}}"
 									],
 									"path": [
 										"api",
 										"v1",
-										"paper",
-										"uploadPaper"
+										"collaborate",
+										"meCreateTemp"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "创建paper",
+							"name": "转换",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{user1}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{    \r\n    \"imgUrl\": \"http://10.12.0.143:9000/cartoon/eV0kiqk1p2.png\",\r\n    \"chapterId\": \"9610511337\",\r\n    \"chapterName\": \"001 踏上征程\",\r\n    \"cartoonId\": \"2354675214\",\r\n    \"cartoonName\": \"全职猎人\",\r\n    \"info\": \"创作信息\",\r\n    \"num\": 4\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{product-service}}/api/v1/collaborate/toCollaborate",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"collaborate",
+										"toCollaborate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "本人上传的 collaborate",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{    \r\n    \"imgUrl\": \"http://10.12.0.143:9000/cartoon/P6lpCwNNfz.png\",\r\n    \"chapterId\": \"9610511337\",\r\n    \"chapterName\": \"001 踏上征程\",\r\n    \"cartoonId\": \"2354675214\",\r\n    \"cartoonName\": \"全职猎人\",\r\n    \"info\": \"全职猎人漫画第一张\",\r\n    \"num\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{product-service}}/api/v1/collaborate/meCreateCollaborate",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"collaborate",
+										"meCreateCollaborate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "根据漫画id获取还未pass的页",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{    \r\n    \"imgUrl\": \"http://10.12.0.143:9000/cartoon/P6lpCwNNfz.png\",\r\n    \"chapterId\": \"9610511337\",\r\n    \"chapterName\": \"001 踏上征程\",\r\n    \"cartoonId\": \"2354675214\",\r\n    \"cartoonName\": \"全职猎人\",\r\n    \"info\": \"全职猎人漫画第一张\",\r\n    \"num\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{product-service}}/api/v1/collaborate/collaborateList/2354675214",
+									"host": [
+										"{{product-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"collaborate",
+										"collaborateList",
+										"2354675214"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "通过作者审核",
 							"request": {
 								"method": "POST",
 								"header": [
@@ -905,7 +1311,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"chapterId\":\"0189333677\",\r\n    \"num\":2,\r\n    \"url\":\"http://127.0.0.1:9000/cartoon/CMIUXlgvOS.png\",\r\n    \"info\":\"我创建的\",\r\n    \"partners\":[\"1760639458694148098\"]\r\n}",
+									"raw": "",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -913,41 +1319,16 @@
 									}
 								},
 								"url": {
-									"raw": "{{product-service}}/api/v1/paper/createPaper",
+									"raw": "{{product-service}}/api/v1/collaborate/toPaper/4862583762",
 									"host": [
 										"{{product-service}}"
 									],
 									"path": [
 										"api",
 										"v1",
-										"paper",
-										"createPaper"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "与我相关的",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "token",
-										"value": "{{token}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{product-service}}/api/v1/paper/meCreate",
-									"host": [
-										"{{product-service}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"paper",
-										"meCreate"
+										"collaborate",
+										"toPaper",
+										"4862583762"
 									]
 								}
 							},
@@ -961,19 +1342,158 @@
 			"name": "订单服务",
 			"item": [
 				{
+					"name": "章节项",
+					"item": [
+						{
+							"name": "本人购买的章节",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{order-service}}/api/v1/chapterItem/buyList",
+									"host": [
+										"{{order-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"chapterItem",
+										"buyList"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "查看用户是否购买了该章节",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{order-service}}/api/v1/chapterItem/isBuy/",
+									"host": [
+										"{{order-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"chapterItem",
+										"isBuy",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "获取漫画销量",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{order-service}}/api/v1/chapterItem/salesVolume/2354675214",
+									"host": [
+										"{{order-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"chapterItem",
+										"salesVolume",
+										"2354675214"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "获取还未分成的章节项",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{order-service}}/api/v1/chapterItem/payListByCartoonId/2354675214",
+									"host": [
+										"{{order-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"chapterItem",
+										"payListByCartoonId",
+										"2354675214"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "分成",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{order-service}}/api/v1/chapterItem/benefits/2354675214",
+									"host": [
+										"{{order-service}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"chapterItem",
+										"benefits",
+										"2354675214"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "充值",
 					"request": {
 						"method": "POST",
 						"header": [
 							{
 								"key": "token",
-								"value": "{{token}}",
+								"value": "{{user1}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{    \r\n    \"chargeId\":\"3\",\r\n    \"clientType\": \"H5\"\r\n}\r\n    ",
+							"raw": "{    \r\n    \"chargeId\":\"1\",\r\n    \"clientType\": \"H5\"\r\n}\r\n    ",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1034,45 +1554,6 @@
 					"response": []
 				},
 				{
-					"name": "章节销售情况",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{order-service}}/api/v1/chapter/payList/7193564663",
-							"host": [
-								"{{order-service}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"chapter",
-								"payList",
-								"7193564663"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "用户使用点数购买漫画",
 					"request": {
 						"method": "POST",
@@ -1085,7 +1566,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{    \r\n    \"chapterIdList\":[\"6371454567\",\"7193564663\"],\r\n    \"cartoonId\":\"4824535991\",\r\n    \"clientType\": \"H5\",\r\n    \"payType\":\"ALIPAY\",\r\n    \"totalAmount\":\"79\"\r\n}\r\n    ",
+							"raw": "{        \r\n    \"chapterIdList\":[\"9610511337\"],\r\n    \"cartoonId\":\"2354675214\",\r\n    \"clientType\": \"H5\",\r\n    \"payType\":\"ALIPAY\",\r\n    \"totalAmount\":\"100\"\r\n}\r\n    ",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1217,7 +1698,17 @@
 		},
 		{
 			"key": "token",
-			"value": "p-projecteyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwcm9qZWN0IiwiaWQiOiIxNzYwNjM5NDU4Njk0MTQ4MDk4IiwibmFtZSI6IuWIhuW4g-W8j-S6i-WKoea1i-ivlSIsIm1haWwiOiJrb2tvZGF5b3UyMDAwQDEyNi5jb20iLCJpYXQiOjE3MDg2MDQxNTMsImV4cCI6MTcwOTIwODk1M30.UlLBcdXugH1W-qTzSQIC1zwCFW-uLXXIXsWp4gbwOuI",
+			"value": "p-projecteyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwcm9qZWN0IiwiaWQiOiIxNzYwNjM5NDU4Njk0MTQ4MDk4IiwibmFtZSI6IuWIhuW4g-W8j-S6i-WKoea1i-ivlSIsIm1haWwiOiJrb2tvZGF5b3UyMDAwQDEyNi5jb20iLCJpYXQiOjE3MTAwNTYyMDYsImV4cCI6MTcxMDY2MTAwNn0.1ZFXjc7SrqPkcNbj8SwYlxWONNvVePQB5pDiJDx13cU",
+			"type": "string"
+		},
+		{
+			"key": "gateway",
+			"value": "localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "user1",
+			"value": "p-projecteyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwcm9qZWN0IiwiaWQiOiIyMTMyMjM0MTMxMjMxMjMyMTMxIiwibmFtZSI6InUyIiwibWFpbCI6IjAzMDYyMDEyMDJAdHV0ZS5lZHUuY24iLCJpYXQiOjE3MTAxMzIzMjcsImV4cCI6MTcxMDczNzEyN30.C-3Q11IoxnHpnIyV1Y6JikDCo5bzyIciTKWDuOv9RsU",
 			"type": "string"
 		}
 	]
