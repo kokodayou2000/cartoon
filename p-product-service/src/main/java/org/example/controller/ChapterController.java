@@ -73,5 +73,16 @@ public class ChapterController {
         return chapterService.addChapterPattern(req);
     }
 
+    /**
+     * 查看本章节的参与者
+     * @return
+     */
+    @GetMapping("/chapterPatternList/{chapterId}")
+    public AjaxResult chapterPatternList(
+            @PathVariable("chapterId") String chapterId
+    ){
+        return chapterService.chapterPatternList(chapterId);
+    }
+
 
 }

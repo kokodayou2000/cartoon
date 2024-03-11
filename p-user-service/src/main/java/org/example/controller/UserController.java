@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -21,8 +23,9 @@ public class UserController {
     private UserService userService;
 
     // 查看用户是否存在 feign
-    @GetMapping("/exist/userId")
-    public AjaxResult exist(String userId){
+    @GetMapping("/exist/{userId}")
+    public AjaxResult exist(
+            @PathVariable("userId") String userId){
         return userService.exist(userId);
     }
 
@@ -77,6 +80,23 @@ public class UserController {
         UserVO userVo = userService.findUserDetail();
         return AjaxResult.success(userVo);
 
+    }
+
+    @GetMapping("/search/{userId}")
+    public AjaxResult search(
+            @PathVariable("userId") String userId
+    ){
+        UserVO userVo = userService.search(userId);
+        return AjaxResult.success(userVo);
+
+    }
+
+    @PostMapping("/batchSearch")
+    public AjaxResult batchSearch(
+            @RequestBody List<String> userIdList
+    ){
+        List<UserVO> userVo = userService.batchSearch(userIdList);
+        return AjaxResult.success(userVo);
     }
 
 

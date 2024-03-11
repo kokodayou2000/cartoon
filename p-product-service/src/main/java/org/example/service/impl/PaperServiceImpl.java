@@ -1,93 +1,61 @@
 package org.example.service.impl;
 
-import org.example.constant.CartoonConstant;
+
 import org.example.core.AjaxResult;
-import org.example.feign.IFileServer;
-import org.example.interceptor.TokenCheckInterceptor;
-import org.example.model.BaseUser;
+import org.example.enums.CartoonStatus;
 import org.example.model.ChapterDO;
 import org.example.model.PaperDO;
+import org.example.model.PartnerInfo;
+import org.example.repository.CartoonRepository;
+import org.example.repository.ChapterRepository;
 import org.example.repository.PaperRepository;
-import org.example.request.CreatePaperReq;
 import org.example.service.IPaperService;
-import org.example.utils.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.print.Paper;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class PaperServiceImpl implements IPaperService {
 
-    @Autowired
-    private IFileServer fileServer;
 
     @Autowired
     private PaperRepository paperRepository;
 
+    @Autowired
+    private ChapterRepository chapterRepository;
+
     @Override
-    public AjaxResult uploadPaperAndSetInfo(MultipartFile file, String chapterId, String num, String patterns,String info) {
-        AjaxResult result = fileServer.uploadAvatar(file);
-        if (!Objects.equals(String.valueOf(result.get("code")), "200")){
-            return AjaxResult.error("上传失败");
-        }
-        String[] list = patterns.split("-");
-
-        String url = (String) result.get("data");
-        PaperDO paperDO = genPaper();
-        paperDO.setUrl(url);
-        paperDO.setNum(Integer.parseInt(num));
-        paperDO.setChapterId(chapterId);
-        // TODO 校验
-        paperDO.setPartners(Arrays.stream(list).collect(Collectors.toSet()));
-        paperDO.setInfo(info);
-        PaperDO save = paperRepository.save(paperDO);
-
-        return AjaxResult.success(save);
+    public AjaxResult list(String chapterId) {
+        List<PaperDO> paperList = paperRepository.findAllByChapterId(chapterId);
+        paperList.sort(Comparator.comparingInt(PaperDO::getNum));
+        return AjaxResult.success(paperList);
     }
 
     @Override
-    public AjaxResult uploadPaper(MultipartFile file) {
-        return fileServer.uploadAvatar(file);
-    }
+    public AjaxResult patternInfo(String cartoonId) {
+        HashMap<String, Integer> hashMap = new HashMap<>();
 
-    @Override
-    public AjaxResult createPaper(CreatePaperReq req) {
-        PaperDO paperDO = genPaper();
-
-        paperDO.setInfo(req.getInfo());
-        paperDO.setUrl(req.getUrl());
-        paperDO.setNum(req.getNum());
-        paperDO.setChapterId(req.getChapterId());
-        paperDO.setPartners(req.getPartners());
-        PaperDO save = paperRepository.save(paperDO);
-        return AjaxResult.success(save);
-    }
-
-    @Override
-    public AjaxResult meCreate() {
-        BaseUser baseUser = TokenCheckInterceptor.tl.get();
-        String userId = baseUser.getId();
-        List<PaperDO> arrayList = new ArrayList<>();
-        for (PaperDO paperDO : paperRepository.findAll()) {
-            if (paperDO.getPartners().contains(userId)){
-                arrayList.add(paperDO);
+        // 根据漫画id，获取该漫画下所有完成的章节
+        List<ChapterDO> list = chapterRepository.findAllByCartoonIdAndStatus(cartoonId, CartoonStatus.FINISH.name());
+        // 获取全部的章节id
+        List<String> idList = list.stream().map(ChapterDO::getId).collect(Collectors.toList());
+        for (String chapterId : idList) {
+            List<PaperDO> paperList = paperRepository.findAllByChapterId(chapterId);
+            // 统计每页的创作者，key是用户id，value的该创作者画的页
+            for (PaperDO paperDO : paperList) {
+                String user = paperDO.getCreateBy();
+                hashMap.put(user,hashMap.getOrDefault(user,1));
             }
         }
-        return AjaxResult.success(arrayList);
-    }
-
-
-    private PaperDO genPaper() {
-        PaperDO paperDO = new PaperDO();
-        paperDO.setId(CommonUtil.getRandomCode());
-        paperDO.setStatus(CartoonConstant.STATUS_DOING);
-        return paperDO;
+        List<PartnerInfo> partnerInfoList = new ArrayList<>();
+        hashMap.forEach((k,v)->{
+            PartnerInfo partnerInfo = new PartnerInfo();
+            partnerInfo.setUserId(k);
+            partnerInfo.setPaperNum(v);
+            partnerInfoList.add(partnerInfo);
+        });
+        return AjaxResult.success(partnerInfoList);
     }
 }

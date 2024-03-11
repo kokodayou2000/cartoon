@@ -28,5 +28,11 @@ public interface ICartoonService {
     AjaxResult price(String cartoonId);
 
     AjaxResult sales(CartoonSaleNumReq req);
+
+    AjaxResult cartoonPatternList(String cartoonId);
+
+    Boolean checkCreate(String userId, String cartoonId);
+
+
 }
 

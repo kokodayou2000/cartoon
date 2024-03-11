@@ -30,6 +30,7 @@ public class CartoonController {
     }
 
 
+
     /**
      * 获取漫画单集的价格
      * @return 根据用户喜欢的漫画推荐
@@ -148,5 +149,14 @@ public class CartoonController {
         return cartoonService.addPattern(req);
     }
 
+    /**
+     * 获取漫画参与者
+     */
+    @GetMapping("/cartoonPatternList/{cartoonId}")
+    public AjaxResult cartoonPatternList(
+            @PathVariable("cartoonId") String cartoonId
+    ){
+        return cartoonService.cartoonPatternList(cartoonId);
+    }
 
 }

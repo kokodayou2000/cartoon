@@ -1065,7 +1065,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     </schema>
     <schema id="311" parent="1" name="cartoon">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2024-03-03.06:07:19</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-03-11.01:50:18</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <user id="312" parent="1" name="mysql.infoschema">

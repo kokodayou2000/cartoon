@@ -19,7 +19,7 @@ public class ChapterItemController {
     private ChapterItemService chapterItemService;
 
     /**
-     * 获取我购买的章节列表
+     * 获取本人购买的章节列表
      * @return
      */
     @GetMapping("/buyList")
@@ -28,14 +28,49 @@ public class ChapterItemController {
     }
 
     /**
+     * 获取本章节是否被该userid购买
+     * @return
+     */
+    @GetMapping("/isBuy/{userId}/{chapterId}")
+    public AjaxResult isBuy(
+            @PathVariable("userId") String userId,
+            @PathVariable("chapterId") String chapterId
+    ){
+        return chapterItemService.isBuy(userId,chapterId);
+    }
+
+    /**
+     * 获取漫画的销量
+     * 包含全部的 销量以及总点数
+     */
+    @GetMapping("/salesVolume/{cartoonId}")
+    public AjaxResult isBuy(
+            @PathVariable("cartoonId") String cartoonId
+    ){
+        return chapterItemService.salesVolume(cartoonId);
+    }
+
+
+    /**
+     * 根据漫画id
+     * 获取还未分成的item
+     */
+    @GetMapping("/payListByCartoonId/{cartoonId}")
+    public AjaxResult payListByCartoonId(
+            @PathVariable("cartoonId") String cartoonId
+    ){
+        return chapterItemService.payListByCartoonId(cartoonId);
+    }
+
+    /**
      * 根据章节id
      * 获取还未分成的item
      */
-    @GetMapping("/payList/{chapterId}")
-    public AjaxResult payList(
+    @GetMapping("/payListByChapterId/{chapterId}")
+    public AjaxResult payListByChapterId(
             @PathVariable("chapterId") String chapterId
     ){
-        return chapterItemService.payList(chapterId);
+        return chapterItemService.payListByChapterId(chapterId);
     }
 
     /**

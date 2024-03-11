@@ -13,4 +13,7 @@ public interface IChapterService {
     AjaxResult updateChapterInfo(UpdateChapterReq req);
 
     AjaxResult addChapterPattern(AddChapterPatternReq req);
+
+    AjaxResult chapterPatternList(String chapterId);
+
 }

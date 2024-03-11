@@ -1,9 +1,6 @@
 package org.example.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.apache.bcel.classfile.Constant;
-import org.aspectj.weaver.loadtime.Aj;
-import org.example.constant.CartoonConstant;
 import org.example.core.AjaxResult;
 import org.example.feign.IFileServer;
 import org.example.feign.IUserServer;
@@ -20,7 +17,6 @@ import org.example.request.UpdateCartoonReq;
 import org.example.response.CartoonInfo;
 import org.example.service.ICartoonService;
 import org.example.utils.CommonUtil;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.example.constant.CartoonConstant.*;
 
@@ -65,8 +62,12 @@ public class CartoonServiceImpl implements ICartoonService {
     public AjaxResult createCartoon(CreateCartoonReq req) {
         BaseUser baseUser = TokenCheckInterceptor.tl.get();
         CartoonDO genCartoonDO = genCartoonDO();
-
         genCartoonDO.setCreateBy(baseUser.getId());
+
+        HashSet<String> partnerList = new HashSet<>();
+        partnerList.add(baseUser.getId());
+        genCartoonDO.setPartners(partnerList);
+
         genCartoonDO.setTitle(req.getTitle());
         genCartoonDO.setPrice(req.getPrice());
         genCartoonDO.setIntroduction(req.getIntroduction());
@@ -136,9 +137,6 @@ public class CartoonServiceImpl implements ICartoonService {
         if (!checkCreateValidation(cartoonDO.getCreateBy())){
             return AjaxResult.error("权限错误");
         }
-        if (cartoonDO.getCreateBy().equals(req.getPatternId())){
-            return AjaxResult.error("不能把作者添加到pattern中");
-        }
         AjaxResult result = userServer.exist(req.getPatternId());
         if (!"200".equals(String.valueOf(result.get("code")))) {
             return AjaxResult.error("要添加的用户不存在");
@@ -174,9 +172,6 @@ public class CartoonServiceImpl implements ICartoonService {
         Iterable<CartoonDO> cartoonRepositoryAll = cartoonRepository.findAll();
         ArrayList<CartoonDO> resList = new ArrayList<>();
         for (CartoonDO cartoonDO : cartoonRepositoryAll) {
-            if (cartoonDO.getCreateBy().equals(userId)){
-                resList.add(cartoonDO);
-            }
             if (cartoonDO.getPartners().contains(userId)){
                 resList.add(cartoonDO);
             }
@@ -221,6 +216,29 @@ public class CartoonServiceImpl implements ICartoonService {
         return AjaxResult.success(save);
     }
 
+    @Override
+    public AjaxResult cartoonPatternList(String cartoonId) {
+        Optional<CartoonDO> byId = cartoonRepository.findById(cartoonId);
+        if (byId.isEmpty()){
+            return AjaxResult.error("查询漫画失败");
+        }
+        log.info("查询漫画参与者");
+        CartoonDO cartoonDO = byId.get();
+        Set<String> userIdList = cartoonDO.getPartners();
+        AjaxResult result = userServer.batchSearch(new ArrayList<>(userIdList));
+        return result;
+    }
+
+    @Override
+    public Boolean checkCreate(String userId, String cartoonId) {
+        Optional<CartoonDO> byId = cartoonRepository.findById(cartoonId);
+        if (byId.isEmpty()){
+            return false;
+        }
+        CartoonDO cartoonDO = byId.get();
+        return Objects.equals(cartoonDO.getCreateBy(), userId);
+    }
+
 
     /**
      *  校验合法性
@@ -236,7 +254,7 @@ public class CartoonServiceImpl implements ICartoonService {
     public CartoonDO genCartoonDO () {
         CartoonDO cartoonDO = new CartoonDO();
         cartoonDO.setId(CommonUtil.getRandomCode());
-        cartoonDO.setPartners(new HashSet<>());
+
         cartoonDO.setCreateTime(new Date());
         cartoonDO.setStatus(STATUS_DOING);
         cartoonDO.setCoverUrl(DEFAULT_COVER);

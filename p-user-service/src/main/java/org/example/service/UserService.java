@@ -9,6 +9,8 @@ import org.example.request.UserRegisterRequest;
 import org.example.vo.UserVO;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 
 public interface UserService extends IService<UserDO> {
 
@@ -30,4 +32,8 @@ public interface UserService extends IService<UserDO> {
     AjaxResult pay(UserChargeReq req);
 
     AjaxResult balance(String userId);
+
+    UserVO search(String userId);
+
+    List<UserVO> batchSearch(List<String> userIdList);
 }

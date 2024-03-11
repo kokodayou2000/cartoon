@@ -25,7 +25,7 @@ public interface IFileServer {
             @RequestPart("file") MultipartFile file
     );
 
-    @GetMapping(
+    @PostMapping(
             value =  "/api/v1/file/upload1",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )

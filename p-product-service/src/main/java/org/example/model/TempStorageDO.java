@@ -7,12 +7,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
-import java.util.List;
-import java.util.Set;
+import java.util.Date;
 
+// 临时存储
 @Data
-@Document("chapter")
-public class ChapterDO {
+@Document("tempStorage")
+public class TempStorageDO {
 
     @Indexed(unique = true)
     @Id
@@ -20,26 +20,21 @@ public class ChapterDO {
     @Field("_id")
     private String id;
 
-    // 对应的 漫画 id
-    private String cartoonId;
+    // 地址
+    private String imgUrl;
 
-    // 章节编号
-    private Integer num;
+    // 其实可以将position 位置记录下来的
 
-    // 章节标题
-    private String title;
+    // 上传的用户
+    private String userId;
 
-    // 完成 or 创作中
-    private String status;
 
-    // 是否是免费章节
-    private Boolean free;
-
-    // 章节大纲
+    // 详情
     private String info;
 
-    // 合作者
-    private Set<String> partners;
+    // 上传时间
+    private Date uploadTime;
+
 
 }
 

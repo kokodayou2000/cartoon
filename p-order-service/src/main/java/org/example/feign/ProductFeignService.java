@@ -27,4 +27,9 @@ public interface ProductFeignService {
     public AjaxResult chapterInfo(
             @PathVariable("chapterId") String chapterId
     );
+
+    @GetMapping("/api/v1/paper/patternInfo/{cartoonId}")
+    public AjaxResult patternInfo(
+            @PathVariable("cartoonId") String cartoonId
+    );
 }

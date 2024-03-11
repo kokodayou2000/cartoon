@@ -25,7 +25,4 @@ public class CreatePaperReq {
     // 信息
     private String info;
 
-    // 参与者
-    private Set<String> partners;
-
 }

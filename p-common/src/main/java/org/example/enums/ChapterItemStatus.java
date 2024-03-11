@@ -1,6 +1,7 @@
 package org.example.enums;
 
 public enum ChapterItemStatus {
+
     // 用户已经付款了
     PAY,
 

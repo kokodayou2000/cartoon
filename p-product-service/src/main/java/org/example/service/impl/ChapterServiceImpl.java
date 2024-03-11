@@ -20,9 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.example.constant.CartoonConstant.STATUS_DOING;
-import static org.example.constant.CartoonConstant.STATUS_FINISHED;
 
 @Service
 public class ChapterServiceImpl implements IChapterService {
@@ -107,7 +107,7 @@ public class ChapterServiceImpl implements IChapterService {
 
         // 检查用户是否存在
         AjaxResult exist = userServer.exist(req.getPatternId());
-        if (String.valueOf(exist.get("code")) != "200"){
+        if (!Objects.equals(String.valueOf(exist.get("code")), "200")){
             return AjaxResult.error("不存在该用户");
         }
 
@@ -132,9 +132,20 @@ public class ChapterServiceImpl implements IChapterService {
 
         Set<String> partners = chapterDO.getPartners();
         partners.add(req.getPatternId());
+        // set 去重
         cartoonDO.setPartners(partners);
         ChapterDO save = chapterRepository.save(chapterDO);
         return AjaxResult.success(save);
+    }
+
+    @Override
+    public AjaxResult chapterPatternList(String chapterId) {
+        Optional<ChapterDO> byId = chapterRepository.findById(chapterId);
+        if (byId.isEmpty()){
+            return AjaxResult.error("查询失败");
+        }
+        ChapterDO chapterDO = byId.get();
+        return userServer.batchSearch(new ArrayList<>(chapterDO.getPartners()));
     }
 
 

@@ -15,5 +15,5 @@ public class CartoonConstant {
 
     public static final String STATUS_FINISHED = "finished";
 
-    public static final String DEFAULT_COVER = "http://127.0.0.1:9000/cartoon/iACSAzghT2.png";
+    public static final String DEFAULT_COVER = "http://10.12.0.143:9000/cartoon/default.png";
 }

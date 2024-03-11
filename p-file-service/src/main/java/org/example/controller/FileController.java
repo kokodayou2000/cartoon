@@ -22,7 +22,7 @@ public class FileController {
         return AjaxResult.success(result);
     }
 
-    @GetMapping("/upload1")
+    @PostMapping("/upload1")
     public AjaxResult upload1(
             @RequestPart("file") MultipartFile file
     ){

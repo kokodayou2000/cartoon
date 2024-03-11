@@ -11,5 +11,5 @@ public interface ChapterRepository extends MongoRepository<ChapterDO,String> {
 
     List<ChapterDO> findChapterDOSByCartoonId(String cartoonDOId);
 
-    List<ChapterDO> findChapterDOSByCartoonIdAndStatus(String cartoonDOId,String status);
+    List<ChapterDO> findAllByCartoonIdAndStatus(String cartoonDOId,String status);
 }

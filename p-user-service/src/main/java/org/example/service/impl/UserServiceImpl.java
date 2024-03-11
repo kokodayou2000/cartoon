@@ -33,6 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -95,6 +96,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
             return AjaxResult.error("查找用户失败");
         }
         return AjaxResult.success(userDO.getPoints());
+    }
+
+    @Override
+    public UserVO search(String userId) {
+        UserDO userDO = userMapper.selectById(userId);
+        UserVO userVO = new UserVO();
+        BeanUtils.copyProperties(userDO,userVO);
+        return userVO;
+    }
+
+    @Override
+    public List<UserVO> batchSearch(List<String> userIdList) {
+        List<UserDO> userDOS = userMapper.selectBatchIds(userIdList);
+        return userDOS.stream().map((item) -> {
+            UserVO userVO = new UserVO();
+            BeanUtils.copyProperties(item, userVO);
+            return userVO;
+        }).collect(Collectors.toList());
+
     }
 
     @Override

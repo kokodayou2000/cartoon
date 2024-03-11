@@ -7,16 +7,21 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.example.core.AjaxResult;
 import org.example.enums.ChapterItemStatus;
 import org.example.enums.ProductOrderStateEnum;
+import org.example.feign.ProductFeignService;
+import org.example.feign.UserFeignService;
 import org.example.interceptor.TokenCheckInterceptor;
 import org.example.mapper.ChapterItemMapper;
-import org.example.model.BaseUser;
-import org.example.model.ChapterItemDO;
+import org.example.model.*;
+import org.example.request.ChargeReq;
+import org.example.request.UserChargeReq;
 import org.example.service.ChapterItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 
 @Service
@@ -24,6 +29,12 @@ public class ChapterItemServiceImpl extends ServiceImpl<ChapterItemMapper, Chapt
 
     @Autowired
     private ChapterItemMapper chapterItemMapper;
+
+    @Autowired
+    private ProductFeignService productFeignService;
+
+    @Autowired
+    private UserFeignService userFeignService;
 
     @Override
     public AjaxResult buyList() {
@@ -39,12 +50,58 @@ public class ChapterItemServiceImpl extends ServiceImpl<ChapterItemMapper, Chapt
         chapterList.sort((o1, o2) -> o2.getCreateTime().compareTo(o1.getCreateTime()));
         return AjaxResult.success(chapterList);
     }
-
+    @Override
+    public AjaxResult isBuy(String userId, String chapterId) {
+        LambdaQueryWrapper<ChapterItemDO> eq = new QueryWrapper<ChapterItemDO>()
+                .lambda()
+                .eq(ChapterItemDO::getUserId, userId)
+                .eq(ChapterItemDO::getChapterId, chapterId);
+        ChapterItemDO chapterItemDO = chapterItemMapper.selectOne(eq);
+        if (chapterItemDO!= null){
+            return AjaxResult.success("用户已经购买了该章节");
+        }
+        return AjaxResult.error("未购买该章节");
+    }
 
     @Override
-    public AjaxResult payList(String chapterId) {
+    public AjaxResult salesVolume(String cartoonId) {
+        Wrapper<ChapterItemDO> eq =
+                new QueryWrapper<ChapterItemDO>()
+                        .lambda()
+                        .eq(ChapterItemDO::getChapterId,cartoonId);
+        List<ChapterItemDO> chapterList = chapterItemMapper.selectList(eq);
 
-        // 已经付款的
+
+        Integer num = new Integer(0);
+        Integer totalPoint = new Integer(0);
+        for (ChapterItemDO chapterItemDO : chapterList) {
+            num += 1;
+            totalPoint += chapterItemDO.getPrice();
+        }
+        SalesVolume salesVolume = new SalesVolume(num,totalPoint);
+        return AjaxResult.success(salesVolume);
+    }
+
+    @Override
+    public AjaxResult payListByCartoonId(String cartoonId) {
+
+        // 已经付款的,但是还未分成的
+        Wrapper<ChapterItemDO> queryWrapper =
+                new QueryWrapper<ChapterItemDO>()
+                        .lambda()
+                        .eq(ChapterItemDO::getStatus, ChapterItemStatus.PAY.name())
+                        .eq(ChapterItemDO::getCartoonId,cartoonId);
+
+        List<ChapterItemDO> chapterList = chapterItemMapper.selectList(queryWrapper);
+        chapterList.sort((o1, o2) -> o2.getCreateTime().compareTo(o1.getCreateTime()));
+
+        return AjaxResult.success(chapterList);
+    }
+
+    @Override
+    public AjaxResult payListByChapterId(String chapterId) {
+
+        // 已经付款的,但是还未分成的
         Wrapper<ChapterItemDO> queryWrapper =
                 new QueryWrapper<ChapterItemDO>()
                         .lambda()
@@ -67,37 +124,60 @@ public class ChapterItemServiceImpl extends ServiceImpl<ChapterItemMapper, Chapt
 
         List<ChapterItemDO> chapterItemList = chapterItemMapper.selectList(queryWrapper);
 
-        // 获取章节id
-        // 更具章节id获取章节相关信息
-        // 获取该章节的合作者的id
-        // 假如章节售价是 70 有两个章节作者，就 35 35
-        // 跟用户分成 35 35即可
-        chapterItemList.forEach((item)->{
-            String chapterId = item.getChapterId();
+        // 统计该漫画赚到了多少钱
+        // 远程获取该漫画的参与者
+        // 该参与者的信息包含了
+        // 用户id，该用户画的页数
+        // 百分比分成
+        Integer totalPoint= new Integer(0);
+        for (ChapterItemDO chapterItemDO : chapterItemList) {
+            totalPoint += chapterItemDO.getPrice();
+        }
+        AjaxResult result = productFeignService.patternInfo(cartoonId);
 
+        if (!Objects.equals(String.valueOf(result.get("code")), "200")){
+            return AjaxResult.error();
+        }
+        Object data = result.get("data");
+        List<PartnerInfo> partnerInfoList = new ArrayList<>();
+        if (data instanceof List<?>){
+            List<?> list = (List<?>) data;
+            for (Object element : list) {
+                if (element instanceof PartnerInfo) {
+                    PartnerInfo info = (PartnerInfo) element;
+                    partnerInfoList.add(info);
+                }
+            }
+        }
+        if (partnerInfoList.size() <= 0){
+            return AjaxResult.error();
+        }
+        Integer totalPaperNum = new Integer(0);
+        for (PartnerInfo partnerInfo : partnerInfoList) {
+            totalPaperNum += partnerInfo.getPaperNum();
+        }
+        // 单页分成价格
+        int singlePaperPrice = totalPoint / totalPaperNum;
 
+        for (PartnerInfo partnerInfo : partnerInfoList) {
+            String userId = partnerInfo.getUserId();
+            Integer paperNum = partnerInfo.getPaperNum();
+            Integer point = singlePaperPrice + paperNum;
+            UserChargeReq userChargeReq = new UserChargeReq();
+            userChargeReq.setUserId(userId);
+            userChargeReq.setPoint(point);
+            AjaxResult ajaxResult = userFeignService.charge(userChargeReq);
+            if (!Objects.equals(String.valueOf(ajaxResult.get("code")), "200")){
+                // TODO 本次分成失败，需要利用分布式事务取消掉之前的操作
+            }
+        }
+        // 将本次的分成 字段设置为 FINISHED
+        for (ChapterItemDO chapterItemDO : chapterItemList) {
+            chapterItemDO.setStatus(ChapterItemStatus.FINISH.name());
+            chapterItemMapper.updateById(chapterItemDO);
+        }
 
-        });
-
-        return null;
-    }
-
-    @Override
-    public boolean changeStatus(String outTradeNo, String userId, String status) {
-
-        // 查询用户支付成功的漫画章节列表
-        Wrapper<ChapterItemDO> queryWrapper =
-                new QueryWrapper<ChapterItemDO>()
-                        .lambda()
-                        .eq(ChapterItemDO::getUserId, userId)
-                        .eq(ChapterItemDO::getStatus, ProductOrderStateEnum.PAY.name());
-
-        List<ChapterItemDO> chapterList = chapterItemMapper.selectList(queryWrapper);
-        chapterList.forEach((item)->{
-            item.setStatus(status);
-            chapterItemMapper.updateById(item);
-        });
-        return true;
+        return AjaxResult.success("分成完毕");
     }
 
 }
