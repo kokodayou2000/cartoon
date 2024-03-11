@@ -2,10 +2,8 @@ package org.example.request;
 
 import lombok.Data;
 
-import java.util.Set;
-
 @Data
-public class UpdateChapterReq {
+public class UpdateChapterInfoReq {
 
     private String id;
 
@@ -15,6 +13,4 @@ public class UpdateChapterReq {
     // 标题
     private String title;
 
-
-    
 }

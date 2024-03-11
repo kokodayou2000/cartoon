@@ -20,7 +20,6 @@ public class ChapterItemController {
 
     /**
      * 获取本人购买的章节列表
-     * @return
      */
     @GetMapping("/buyList")
     public AjaxResult buyList(){
@@ -28,8 +27,7 @@ public class ChapterItemController {
     }
 
     /**
-     * 获取本章节是否被该userid购买
-     * @return
+     * 获取本章节是否被该 user 购买,当用户查看漫画的时候，进行可以进行权限查询
      */
     @GetMapping("/isBuy/{userId}/{chapterId}")
     public AjaxResult isBuy(
@@ -75,6 +73,7 @@ public class ChapterItemController {
 
     /**
      * 分配金额
+     * 1 只有漫画作者能分配金额，当新增参与者的时候，建议先对现有销售的漫画进行分成
      * distribution benefits
      */
     @GetMapping("/benefits/{cartoonId}")

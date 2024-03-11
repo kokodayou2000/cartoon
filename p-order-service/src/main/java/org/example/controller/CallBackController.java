@@ -31,7 +31,7 @@ public class CallBackController {
     private ProductOrderService productOrderService;
 
 
-    // 支付宝那边调用的
+    // 支付宝远程调用该接口
     @PostMapping("/alipay")
     public String alipayCallback(HttpServletRequest request, HttpServletResponse response){
 

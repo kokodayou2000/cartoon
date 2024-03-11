@@ -100,49 +100,6 @@ public class ProductOrderServiceImpl extends ServiceImpl<ProductOrderMapper, Pro
         }
     }
 
-    //用购买章节
-    @Override
-    public AjaxResult userBuy(UserBuyChapterRequest req) {
-
-        String orderOutTradeNO = CommonUtil.getRandomCode(32);
-        BaseUser baseUser = TokenCheckInterceptor.tl.get();
-
-        AjaxResult balance = userFeignService.balance(baseUser.getId());
-        if (!Objects.equals(String.valueOf(balance.get("code")), "200")){
-            return AjaxResult.error("获取用户当前点数失败");
-        }
-
-        String data = balance.get("data").toString();
-        int currentPoint = Integer.parseInt(data);
-        if (currentPoint < req.getTotalAmount()){
-            return AjaxResult.error("用户剩余点数不足");
-        }
-
-        // 创建订单
-        ProductOrderDO orderDO = saveProductOrder(baseUser, orderOutTradeNO);
-        // 订单类型
-        orderDO.setOrderType(ProductOrderTypeEnum.SHOPPING.name());
-        orderDO.setState(ProductOrderStateEnum.PAY.name());
-        orderDO.setPayAmount(BigDecimal.valueOf(req.getTotalAmount()));
-        orderDO.setTotalAmount(BigDecimal.valueOf(req.getTotalAmount()));
-        orderDO.setPayType(ProductOrderPayTypeEnum.ALIPAY.name());
-
-        // 记录本次交易的点数转换记录
-        orderDO.setBeforePoint(currentPoint);
-        orderDO.setPoint(req.getTotalAmount());
-
-        // 创建产品消费记录
-        productOrderMapper.insert(orderDO);
-
-        // 创建订单项
-        this.saveChapterItem(req, orderDO,baseUser);
-        UserChargeReq userChargeReq = new UserChargeReq();
-        userChargeReq.setUserId(baseUser.getId());
-        userChargeReq.setPoint(req.getTotalAmount());
-        userFeignService.pay(userChargeReq);
-        return AjaxResult.success();
-    }
-
     // 充值接口
     @Override
     public AjaxResult charge(ChargeReq req) {
@@ -201,6 +158,52 @@ public class ProductOrderServiceImpl extends ServiceImpl<ProductOrderMapper, Pro
         }
     }
 
+    //用户购买章节，新增一个条目即可，不需要发送延迟消息
+    @Override
+    public AjaxResult userBuy(UserBuyChapterRequest req) {
+
+        String orderOutTradeNO = CommonUtil.getRandomCode(32);
+        BaseUser baseUser = TokenCheckInterceptor.tl.get();
+
+        AjaxResult balance = userFeignService.balance(baseUser.getId());
+        if (!Objects.equals(String.valueOf(balance.get("code")), "200")){
+            return AjaxResult.error("获取用户当前点数失败");
+        }
+
+        String data = balance.get("data").toString();
+        int currentPoint = Integer.parseInt(data);
+        if (currentPoint < req.getTotalAmount()){
+            return AjaxResult.error("用户剩余点数不足");
+        }
+
+        // 创建订单
+        ProductOrderDO orderDO = saveProductOrder(baseUser, orderOutTradeNO);
+        // 订单类型
+        orderDO.setOrderType(ProductOrderTypeEnum.SHOPPING.name());
+        orderDO.setState(ProductOrderStateEnum.PAY.name());
+        orderDO.setPayAmount(BigDecimal.valueOf(req.getTotalAmount()));
+        orderDO.setTotalAmount(BigDecimal.valueOf(req.getTotalAmount()));
+        orderDO.setPayType(ProductOrderPayTypeEnum.ALIPAY.name());
+
+        // 记录本次交易的点数转换记录
+        orderDO.setBeforePoint(currentPoint);
+        orderDO.setPoint(req.getTotalAmount());
+
+        // 创建产品消费记录
+        productOrderMapper.insert(orderDO);
+
+        // 创建订单项
+        this.saveChapterItem(req, orderDO,baseUser);
+        UserChargeReq userChargeReq = new UserChargeReq();
+        userChargeReq.setUserId(baseUser.getId());
+        userChargeReq.setPoint(req.getTotalAmount());
+        // 付款
+        userFeignService.pay(userChargeReq);
+        return AjaxResult.success();
+    }
+
+
+
     @Override
     public boolean closeProductOrder(OrderMessage orderMessage) {
         // 查询订单对象
@@ -243,9 +246,8 @@ public class ProductOrderServiceImpl extends ServiceImpl<ProductOrderMapper, Pro
                 UserChargeReq userChargeReq = new UserChargeReq();
                 userChargeReq.setUserId(productOrderDO.getUserId());
                 userChargeReq.setPoint(productOrderDO.getPoint());
-                if (Objects.equals(productOrderDO.getOrderType(), ProductOrderTypeEnum.CHARGE.name())){
-                    userFeignService.charge(userChargeReq);
-                }
+                userFeignService.charge(userChargeReq);
+
                 productOrderDO.setState(ProductOrderStateEnum.PAY.name());
                 productOrderMapper.updateById(productOrderDO);
                 log.info("订单支付成功 {}",orderMessage);
@@ -297,7 +299,7 @@ public class ProductOrderServiceImpl extends ServiceImpl<ProductOrderMapper, Pro
             chapterItemDO.setUserId(baseUser.getId());
             chapterItemDO.setCartoonId(cartoonId);
             chapterItemDO.setChapterId(chapterId);
-            // TODO 章节名称
+            // TODO 需要远程获取章节名称嘛？
             chapterItemDO.setChapterName("");
             chapterItemDO.setStatus(ChapterItemStatus.PAY.name());
             chapterItemDO.setOutTradeNo(outTradeNo);

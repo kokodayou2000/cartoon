@@ -2,6 +2,7 @@ package org.example.service.impl;
 
 
 import org.example.core.AjaxResult;
+import org.example.enums.CartoonStatus;
 import org.example.feign.IUserServer;
 import org.example.interceptor.TokenCheckInterceptor;
 import org.example.model.BaseUser;
@@ -13,16 +14,15 @@ import org.example.repository.ChapterRepository;
 import org.example.repository.PaperRepository;
 import org.example.request.AddChapterPatternReq;
 import org.example.request.CreateChapterReq;
-import org.example.request.UpdateChapterReq;
+import org.example.request.UpdateChapterInfoReq;
+import org.example.request.UpdateChapterStatusReq;
 import org.example.service.IChapterService;
 import org.example.utils.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
-import static org.example.constant.CartoonConstant.STATUS_DOING;
 
 @Service
 public class ChapterServiceImpl implements IChapterService {
@@ -73,7 +73,7 @@ public class ChapterServiceImpl implements IChapterService {
         genChapter.setCartoonId(req.getCartoonId());
         genChapter.setTitle(req.getTitle());
         genChapter.setFree(req.getFree());
-        genChapter.setStatus(STATUS_DOING);
+        genChapter.setStatus(CartoonStatus.DOING.name());
         genChapter.setNum(req.getNum());
         Set<String> set = new HashSet<>();
         set.add(TokenCheckInterceptor.tl.get().getId());
@@ -85,7 +85,7 @@ public class ChapterServiceImpl implements IChapterService {
 
 
     @Override
-    public AjaxResult updateChapterInfo(UpdateChapterReq req) {
+    public AjaxResult updateChapterInfo(UpdateChapterInfoReq req) {
         String chapterId = req.getId();
         Optional<ChapterDO> byId = chapterRepository.findById(chapterId);
         if (byId.isEmpty()){
@@ -101,6 +101,27 @@ public class ChapterServiceImpl implements IChapterService {
         ChapterDO save = chapterRepository.save(chapterDO);
         return AjaxResult.success(save);
     }
+
+    @Override
+    public AjaxResult updateChapterStatus(UpdateChapterStatusReq req) {
+        String chapterId = req.getChapterId();
+        Optional<ChapterDO> byId = chapterRepository.findById(chapterId);
+        if (byId.isEmpty()){
+            return AjaxResult.error("查询章节失败");
+        }
+        ChapterDO chapterDO = byId.get();
+
+        if (!checkValidation(chapterDO)){
+            return AjaxResult.error("更新失败");
+        }
+        if (CartoonStatus.DOING.name().equals(req.getStatus()) || CartoonStatus.FINISH.name().equals(req.getStatus())){
+            chapterDO.setStatus(req.getStatus());
+            ChapterDO save = chapterRepository.save(chapterDO);
+            return AjaxResult.success(save);
+        }
+        return AjaxResult.error("状态只有doing or finished");
+    }
+
 
     @Override
     public AjaxResult addChapterPattern(AddChapterPatternReq req) {
@@ -147,6 +168,7 @@ public class ChapterServiceImpl implements IChapterService {
         ChapterDO chapterDO = byId.get();
         return userServer.batchSearch(new ArrayList<>(chapterDO.getPartners()));
     }
+
 
 
     // 漫画的作者和漫画参与者

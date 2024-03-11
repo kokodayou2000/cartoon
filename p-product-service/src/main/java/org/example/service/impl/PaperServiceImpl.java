@@ -46,7 +46,7 @@ public class PaperServiceImpl implements IPaperService {
             // 统计每页的创作者，key是用户id，value的该创作者画的页
             for (PaperDO paperDO : paperList) {
                 String user = paperDO.getCreateBy();
-                hashMap.put(user,hashMap.getOrDefault(user,1));
+                hashMap.put(user,hashMap.getOrDefault(user,0)+1);
             }
         }
         List<PartnerInfo> partnerInfoList = new ArrayList<>();

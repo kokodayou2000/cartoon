@@ -18,10 +18,7 @@ import org.example.service.ChapterItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 
 @Service
@@ -68,7 +65,7 @@ public class ChapterItemServiceImpl extends ServiceImpl<ChapterItemMapper, Chapt
         Wrapper<ChapterItemDO> eq =
                 new QueryWrapper<ChapterItemDO>()
                         .lambda()
-                        .eq(ChapterItemDO::getChapterId,cartoonId);
+                        .eq(ChapterItemDO::getCartoonId,cartoonId);
         List<ChapterItemDO> chapterList = chapterItemMapper.selectList(eq);
 
 
@@ -117,9 +114,10 @@ public class ChapterItemServiceImpl extends ServiceImpl<ChapterItemMapper, Chapt
     @Override
     public AjaxResult benefits(String cartoonId) {
 
+
         LambdaQueryWrapper<ChapterItemDO> queryWrapper = new QueryWrapper<ChapterItemDO>()
                 .lambda()
-                .eq(ChapterItemDO::getChapterId, cartoonId)
+                .eq(ChapterItemDO::getCartoonId, cartoonId)
                 .eq(ChapterItemDO::getStatus, ChapterItemStatus.PAY.name());
 
         List<ChapterItemDO> chapterItemList = chapterItemMapper.selectList(queryWrapper);
@@ -129,7 +127,7 @@ public class ChapterItemServiceImpl extends ServiceImpl<ChapterItemMapper, Chapt
         // 该参与者的信息包含了
         // 用户id，该用户画的页数
         // 百分比分成
-        Integer totalPoint= new Integer(0);
+        Integer totalPoint= 0;
         for (ChapterItemDO chapterItemDO : chapterItemList) {
             totalPoint += chapterItemDO.getPrice();
         }
@@ -138,13 +136,17 @@ public class ChapterItemServiceImpl extends ServiceImpl<ChapterItemMapper, Chapt
         if (!Objects.equals(String.valueOf(result.get("code")), "200")){
             return AjaxResult.error();
         }
-        Object data = result.get("data");
+        Object outData = result.get("data");
+
         List<PartnerInfo> partnerInfoList = new ArrayList<>();
-        if (data instanceof List<?>){
-            List<?> list = (List<?>) data;
+        if (outData instanceof List<?>){
+            List<?> list = (List<?>) outData;
             for (Object element : list) {
-                if (element instanceof PartnerInfo) {
-                    PartnerInfo info = (PartnerInfo) element;
+                if (element instanceof Map) {
+                    LinkedHashMap<String, Object> map = (LinkedHashMap<String, Object>) element;
+                    String uid = (String) map.get("userId");
+                    Integer paperNum = (Integer) map.get("paperNum");
+                    PartnerInfo info = new PartnerInfo(uid,paperNum);
                     partnerInfoList.add(info);
                 }
             }
@@ -162,7 +164,7 @@ public class ChapterItemServiceImpl extends ServiceImpl<ChapterItemMapper, Chapt
         for (PartnerInfo partnerInfo : partnerInfoList) {
             String userId = partnerInfo.getUserId();
             Integer paperNum = partnerInfo.getPaperNum();
-            Integer point = singlePaperPrice + paperNum;
+            Integer point = singlePaperPrice * paperNum;
             UserChargeReq userChargeReq = new UserChargeReq();
             userChargeReq.setUserId(userId);
             userChargeReq.setPoint(point);
