@@ -10,8 +10,4 @@ import java.util.List;
 public interface ChapterItemMapper extends BaseMapper<ChapterItemDO> {
 
 
-    /**
-     * 批量插入
-     */
-    void insertBatch(@Param("orderItemList") List<ChapterItemDO> chapterItemDOS);
 }

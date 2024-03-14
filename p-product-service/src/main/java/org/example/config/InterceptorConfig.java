@@ -18,7 +18,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
                         "/api/v1/cartoon/**",
                         "/api/v1/chapter/**",
                         "/api/v1/paper/**",
-                        "/api/v1/collaborate/**"
+                        "/api/v1/collaborate/**",
+                        "/api/v1/rawPad/**"
                 )
                 .excludePathPatterns(
                         "/api/v1/banner/list",

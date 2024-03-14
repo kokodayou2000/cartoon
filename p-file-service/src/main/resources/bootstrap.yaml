@@ -3,6 +3,7 @@ spring:
     name: c-file-service
   cloud:
     nacos:
+      server-addr: 10.12.0.143:8848
       config:
         server-addr: 10.12.0.143:8848
         file-extension: yaml

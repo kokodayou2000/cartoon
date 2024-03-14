@@ -1,16 +1,16 @@
-cd .\p-coupon-service\
+cd p-file-service
 mvn install dockerfile:build
 cd ..
-cd .\p-gateway\
+cd p-gateway
 mvn install dockerfile:build
 cd ..
-cd .\p-order-service\
+cd p-order-service
 mvn install dockerfile:build
 cd ..
-cd .\p-product-service\
+cd p-product-service
 mvn install dockerfile:build
 cd ..
-cd .\p-user-service\
+cd p-user-service
 mvn install dockerfile:build
 cd ..
 
