@@ -14,9 +14,11 @@ import org.example.interceptor.TokenCheckInterceptor;
 import org.example.model.BaseUser;
 import org.example.model.UserDO;
 import org.example.mapper.UserMapper;
+import org.example.model.UserInfo;
 import org.example.request.UserChargeReq;
 import org.example.request.UserLoginRequest;
 import org.example.request.UserRegisterRequest;
+import org.example.response.LoginResp;
 import org.example.service.NotifyService;
 import org.example.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -213,7 +215,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
                 String token = JWTUtil.generationJsonWebToken(loginUser);
                 //将token返回
                 JWTUtil.checkJWT(token);
-                return AjaxResult.success(token);
+                UserInfo userInfo = new UserInfo();
+                BeanUtils.copyProperties(userDO,userInfo);
+                LoginResp loginResp = new LoginResp();
+                loginResp.setUserInfo(userInfo);
+                loginResp.setToken(token);
+                return AjaxResult.success(loginResp);
             }else{
                 //密码不正确
                 return AjaxResult.error("密码错误");
