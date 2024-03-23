@@ -29,7 +29,6 @@ public class RawPadServiceImpl implements IRawPadService {
         rawPad.setName(name);
         BaseUser baseUser = TokenCheckInterceptor.tl.get();
         rawPad.setUserId(baseUser.getId());
-        rawPad.setUserId(CommonUtil.getRandomCode());
         rawPad.setPenList(new ArrayList<>());
         RawPadDO insert = rawPadRepository.insert(rawPad);
         return AjaxResult.success(insert);
