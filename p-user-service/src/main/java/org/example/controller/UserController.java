@@ -22,6 +22,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/searchUser/{username}")
+    public AjaxResult searchUser(
+            @PathVariable("username") String username){
+        return userService.searchUser(username);
+    }
+
     // 查看用户是否存在 feign
     @GetMapping("/exist/{userId}")
     public AjaxResult exist(

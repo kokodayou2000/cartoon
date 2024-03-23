@@ -120,6 +120,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
     }
 
     @Override
+    public AjaxResult searchUser(String username) {
+        List<UserDO> byUsername = userMapper.findByUsername(username);
+        List<UserVO> voList = byUsername.stream().map((item) -> {
+            UserVO userVO = new UserVO();
+            BeanUtils.copyProperties(item, userVO);
+            return userVO;
+        }).collect(Collectors.toList());
+        return AjaxResult.success(voList);
+    }
+
+    @Override
     public AjaxResult pay(UserChargeReq req) {
         String userId = req.getUserId();
         UserDO userDO = userMapper.selectById(userId);
