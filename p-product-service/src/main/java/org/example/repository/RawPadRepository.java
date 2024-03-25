@@ -10,5 +10,8 @@ import java.util.Optional;
 
 @Repository
 public interface RawPadRepository extends MongoRepository<RawPadDO,String> {
-    Optional<List<RawPadDO>> queryAllByUserId(String userId);
+
+    List<RawPadDO> queryAllByPaperId(String paperId);
+
+    RawPadDO queryByPaperIdAndUserId(String paperId, String id);
 }

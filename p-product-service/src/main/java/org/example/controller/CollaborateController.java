@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-
+// collaborate 是中间的状态，用户绘画之后，生成图片，并将图片发送给管理员
 @RestController
 @RequestMapping("/api/v1/collaborate")
 public class CollaborateController {

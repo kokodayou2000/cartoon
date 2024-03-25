@@ -6,14 +6,13 @@ import org.example.model.BaseUser;
 import org.example.model.RawPadDO;
 import org.example.model.UpdateRawPadReq;
 import org.example.repository.RawPadRepository;
+import org.example.request.CreateRawPadReq;
 import org.example.service.IRawPadService;
 import org.example.utils.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class RawPadServiceImpl implements IRawPadService {
@@ -23,11 +22,17 @@ public class RawPadServiceImpl implements IRawPadService {
 
 
     @Override
-    public AjaxResult create(String name) {
+    public AjaxResult createRawPad(CreateRawPadReq req) {
+        BaseUser baseUser = TokenCheckInterceptor.tl.get();
+        RawPadDO rawPadDO = rawPadRepository.queryByPaperIdAndUserId(req.getPaperId(), baseUser.getId());
+        // 如果不为空，就不需要新创建
+        if (rawPadDO != null){
+            return AjaxResult.success("已经创建过了");
+        }
         RawPadDO rawPad = new RawPadDO();
         rawPad.setId(CommonUtil.getRandomCode());
-        rawPad.setName(name);
-        BaseUser baseUser = TokenCheckInterceptor.tl.get();
+        rawPad.setPaperId(req.getPaperId());
+
         rawPad.setUserId(baseUser.getId());
         rawPad.setPenList(new ArrayList<>());
         RawPadDO insert = rawPadRepository.insert(rawPad);
@@ -35,18 +40,12 @@ public class RawPadServiceImpl implements IRawPadService {
     }
 
     @Override
-    public AjaxResult list() {
-        BaseUser baseUser = TokenCheckInterceptor.tl.get();
-        String userId = baseUser.getId();
-        Optional<List<RawPadDO>> optional = rawPadRepository.queryAllByUserId(userId);
-        return optional.map(AjaxResult::success).orElseGet(() -> AjaxResult.success(new ArrayList<RawPadDO>()));
+    public AjaxResult workRawPad(String paperId) {
+        List<RawPadDO> rawPadDO = rawPadRepository.queryAllByPaperId(paperId);
+        return AjaxResult.success(rawPadDO);
     }
 
-    @Override
-    public AjaxResult rawPad(String id) {
-        Optional<RawPadDO> byId = rawPadRepository.findById(id);
-        return byId.map(AjaxResult::success).orElseGet(() -> AjaxResult.error("没数据"));
-    }
+
 
     @Override
     public AjaxResult UpdateRawPadReq(UpdateRawPadReq req) {

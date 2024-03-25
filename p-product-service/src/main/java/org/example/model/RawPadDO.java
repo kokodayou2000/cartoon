@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Document("rawPad")
@@ -18,13 +19,17 @@ public class RawPadDO {
     @MongoId
     @Field("_id")
     private String id;
-    // 笔画
-    private List<Pen> penList;
+
+    // 页id
+    private String paperId;
+
     // 用户id
     private String userId;
 
-    // 名字
-    private String name;
+
+    // 笔画
+    private List<Pen> penList;
+
 }
 
 

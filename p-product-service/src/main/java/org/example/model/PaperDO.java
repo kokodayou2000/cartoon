@@ -29,12 +29,15 @@ public class PaperDO {
     // 链接
     private String url;
 
+    // DOING or FINISH
+    private String status;
 
     //信息
     private String info;
 
     // 合作者
-//    private Set<String> partners;
+    private Set<String> partners;
+
     // 创作者
     private String createBy;
 }

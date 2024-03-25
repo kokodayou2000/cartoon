@@ -3,13 +3,21 @@ package org.example.service.impl;
 
 import org.example.core.AjaxResult;
 import org.example.enums.CartoonStatus;
+import org.example.enums.PaperStatus;
+import org.example.interceptor.TokenCheckInterceptor;
+import org.example.model.BaseUser;
 import org.example.model.ChapterDO;
 import org.example.model.PaperDO;
 import org.example.model.PartnerInfo;
 import org.example.repository.CartoonRepository;
 import org.example.repository.ChapterRepository;
 import org.example.repository.PaperRepository;
+import org.example.request.AddPaperPatternReq;
+import org.example.request.CreatePaperReq;
+import org.example.request.CreateRawPadReq;
 import org.example.service.IPaperService;
+import org.example.utils.CommonUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +34,40 @@ public class PaperServiceImpl implements IPaperService {
     @Autowired
     private ChapterRepository chapterRepository;
 
+    @Autowired
+    private RawPadServiceImpl rawPadService;
+
+    @Override
+    public AjaxResult addPaperPattern(AddPaperPatternReq req) {
+        Optional<PaperDO> byId = paperRepository.findById(req.getPaperId());
+        if (byId.isEmpty()){
+            return AjaxResult.error();
+        }
+        PaperDO paperDO = byId.get();
+        Set<String> partners = paperDO.getPartners();
+        partners.add(req.getUserId());
+        paperDO.setPartners(partners);
+        paperRepository.save(paperDO);
+        return AjaxResult.success();
+    }
+
+
+    @Override
+    public AjaxResult checkCanJoin() {
+        BaseUser baseUser = TokenCheckInterceptor.tl.get();
+//        if (baseUser.getId())
+        return null;
+    }
+
+
+
+
+    @Override
+    public AjaxResult finishList(String chapterId) {
+        List<PaperDO> paperList = paperRepository.findAllByChapterIdAndStatus(chapterId,PaperStatus.FINISH.name());
+        paperList.sort(Comparator.comparingInt(PaperDO::getNum));
+        return AjaxResult.success(paperList);
+    }
     @Override
     public AjaxResult list(String chapterId) {
         List<PaperDO> paperList = paperRepository.findAllByChapterId(chapterId);
@@ -58,4 +100,20 @@ public class PaperServiceImpl implements IPaperService {
         });
         return AjaxResult.success(partnerInfoList);
     }
+
+    @Override
+    public AjaxResult createPaper(CreatePaperReq req) {
+        PaperDO paperDO = new PaperDO();
+        BeanUtils.copyProperties(req,paperDO);
+        paperDO.setId(CommonUtil.getRandomCode());
+        paperDO.setStatus(PaperStatus.DOING.name());
+        paperRepository.save(paperDO);
+        // 创建对应的raw对象
+        CreateRawPadReq createRawPadReq = new CreateRawPadReq();
+        createRawPadReq.setPaperId(paperDO.getId());
+        rawPadService.createRawPad(createRawPadReq);
+        return AjaxResult.success();
+    }
+
+
 }

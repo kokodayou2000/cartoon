@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface PaperRepository extends MongoRepository<PaperDO,String> {
     List<PaperDO> findAllByChapterId(String chapterId);
+
+    List<PaperDO> findAllByChapterIdAndStatus(String chapterId,String status);
 }
