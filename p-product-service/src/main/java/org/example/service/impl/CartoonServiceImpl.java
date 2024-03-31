@@ -1,5 +1,6 @@
 package org.example.service.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.example.core.AjaxResult;
 import org.example.feign.IFileServer;
@@ -8,6 +9,7 @@ import org.example.interceptor.TokenCheckInterceptor;
 import org.example.model.BaseUser;
 import org.example.model.CartoonDO;
 import org.example.model.ChapterDO;
+import org.example.model.ImageDO;
 import org.example.repository.CartoonRepository;
 import org.example.repository.ChapterRepository;
 import org.example.request.AddPatternsReq;
@@ -59,6 +61,13 @@ public class CartoonServiceImpl implements ICartoonService {
     }
 
     @Override
+    public AjaxResult cartoonListByTag(String tag) {
+        List<CartoonDO> cartoonDOS = cartoonRepository.queryAllByTagsContaining(tag);
+        return AjaxResult.success(cartoonDOS);
+    }
+
+
+    @Override
     public AjaxResult createCartoon(CreateCartoonReq req) {
         BaseUser baseUser = TokenCheckInterceptor.tl.get();
         CartoonDO genCartoonDO = genCartoonDO();
@@ -93,13 +102,16 @@ public class CartoonServiceImpl implements ICartoonService {
         }
 
         AjaxResult result = fileServer.uploadAvatar(file);
+
         String code = String.valueOf(result.get("code"));
         if (!Objects.equals(code, "200")){
             return AjaxResult.error("上传封面失败");
         }
         log.info("上传漫画头像 {} ",id);
-        String url = (String)result.get("data");
-        cartoonDO.setCoverUrl(url);
+        Object imageDOMap = (Object) (result.get("data"));
+        ObjectMapper objectMapper = new ObjectMapper();
+        ImageDO imageDO = objectMapper.convertValue(imageDOMap, ImageDO.class);
+        cartoonDO.setCoverUrl(imageDO.getUrl());
         CartoonDO save = cartoonRepository.save(cartoonDO);
         return AjaxResult.success(save);
     }
@@ -163,6 +175,12 @@ public class CartoonServiceImpl implements ICartoonService {
         cartoonInfo.setChapterList(chapterDOList);
 
         return AjaxResult.success(cartoonInfo);
+    }
+
+    @Override
+    public AjaxResult chapterList(String cartoonId) {
+        List<ChapterDO> chapterDOList = chapterRepository.queryAllByCartoonId(cartoonId);
+        return AjaxResult.success(chapterDOList);
     }
 
     @Override
@@ -238,6 +256,7 @@ public class CartoonServiceImpl implements ICartoonService {
         CartoonDO cartoonDO = byId.get();
         return Objects.equals(cartoonDO.getCreateBy(), userId);
     }
+
 
 
     /**

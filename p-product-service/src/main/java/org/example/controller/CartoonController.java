@@ -29,7 +29,17 @@ public class CartoonController {
         return AjaxResult.error();
     }
 
-
+    /**
+     * 根据tag获取漫画列表
+     * @param tag 标签
+     * @return
+     */
+    @GetMapping("/cartoonListByTag/{tag}")
+    public AjaxResult cartoonListByTag(
+            @PathVariable("tag") String tag
+    ) {
+        return cartoonService.cartoonListByTag(tag);
+    }
 
     /**
      * 获取漫画单集的价格
@@ -95,6 +105,18 @@ public class CartoonController {
             @PathVariable("cartoonId") String cartoonId
     ){
         return cartoonService.cartoonInfo(cartoonId);
+    }
+
+    /**
+     * 根据漫画 id 获取漫画下的所有章节，包含 DOING 状态的
+     * @param cartoonId 漫画id
+     * @return CartoonInfo
+     */
+    @GetMapping("/chapterList/{cartoonId}")
+    public AjaxResult chapterList(
+            @PathVariable("cartoonId") String cartoonId
+    ){
+        return cartoonService.chapterList(cartoonId);
     }
 
     /**

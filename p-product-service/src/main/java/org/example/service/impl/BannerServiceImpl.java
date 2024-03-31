@@ -1,8 +1,10 @@
 package org.example.service.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.core.AjaxResult;
 import org.example.feign.IFileServer;
 import org.example.model.BannerDO;
+import org.example.model.ImageDO;
 import org.example.repository.BannerRepository;
 import org.example.request.ActiveBannerReq;
 import org.example.service.IBannerService;
@@ -43,12 +45,14 @@ public class BannerServiceImpl implements IBannerService {
         if (code != 200){
             return AjaxResult.error("上传失败");
         }
-        String url = (String)result.get("data");
+        Object imageDOMap = (Object) (result.get("data"));
+        ObjectMapper objectMapper = new ObjectMapper();
+        ImageDO imageDO = objectMapper.convertValue(imageDOMap, ImageDO.class);
         BannerDO bannerDO = new BannerDO();
         bannerDO.setId(CommonUtil.getRandomCode());
         bannerDO.setActive(false);
         bannerDO.setCartoonId(cartoonId);
-        bannerDO.setCoverUrl(url);
+        bannerDO.setCoverUrl(imageDO.getUrl());
         BannerDO save = bannerRepository.save(bannerDO);
         return AjaxResult.success(save);
     }

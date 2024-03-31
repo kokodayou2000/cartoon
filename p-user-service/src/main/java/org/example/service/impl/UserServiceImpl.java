@@ -3,6 +3,7 @@ package org.example.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.Md5Crypt;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -12,6 +13,7 @@ import org.example.enums.SendCodeEnum;
 import org.example.fegin.IFileServer;
 import org.example.interceptor.TokenCheckInterceptor;
 import org.example.model.BaseUser;
+import org.example.model.ImageDO;
 import org.example.model.UserDO;
 import org.example.mapper.UserMapper;
 import org.example.model.UserInfo;
@@ -61,8 +63,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
         }
         String userId = baseUser.getId();
         UserDO userDO = userMapper.selectById(userId);
-        String url = result.get("data").toString();
-        userDO.setHeadImg(url);
+        Object imageDOMap = (Object) (result.get("data"));
+        ObjectMapper objectMapper = new ObjectMapper();
+        ImageDO imageDO = objectMapper.convertValue(imageDOMap, ImageDO.class);
+        userDO.setHeadImg(imageDO.getUrl());
         int updateById = userMapper.updateById(userDO);
         if (updateById != 1){
             return AjaxResult.error("更新头像失败");

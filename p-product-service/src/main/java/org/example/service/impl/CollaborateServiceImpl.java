@@ -1,12 +1,11 @@
 package org.example.service.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.core.AjaxResult;
+import org.example.enums.PaperStatus;
 import org.example.feign.IFileServer;
 import org.example.interceptor.TokenCheckInterceptor;
-import org.example.model.ChapterDO;
-import org.example.model.CollaborateDO;
-import org.example.model.PaperDO;
-import org.example.model.TempStorageDO;
+import org.example.model.*;
 import org.example.repository.*;
 import org.example.request.CreateCollaborateReq;
 import org.example.service.ICartoonService;
@@ -43,11 +42,13 @@ public class CollaborateServiceImpl implements ICollaborateService {
         if (!Objects.equals(String.valueOf(result.get("code")), "200")){
             return AjaxResult.error("上传图片失败");
         }
-        String url = String.valueOf(result.get("data"));
+        Object imageDOMap = (Object) (result.get("data"));
+        ObjectMapper objectMapper = new ObjectMapper();
+        ImageDO imageDO = objectMapper.convertValue(imageDOMap, ImageDO.class);
         TempStorageDO tempStorageDO = new TempStorageDO();
         tempStorageDO.setId(CommonUtil.getRandomCode());
         tempStorageDO.setUploadTime(new Date());
-        tempStorageDO.setImgUrl(url);
+        tempStorageDO.setImgUrl(imageDO.getUrl());
         String userId = TokenCheckInterceptor.tl.get().getId();
         tempStorageDO.setUserId(userId);
         tempStorageDO.setInfo(info);
@@ -87,13 +88,15 @@ public class CollaborateServiceImpl implements ICollaborateService {
             return AjaxResult.error("没有权限通过该页");
         }
 
+
         String chapterId = collaborateDO.getChapterId();
-        List<PaperDO> allByChapterId = paperRepository.findAllByChapterId(chapterId);
-        for (PaperDO paperDO : allByChapterId) {
-            if (Objects.equals(paperDO.getNum(), collaborateDO.getNum())){
-                return AjaxResult.error("已经通过该页了");
-            }
-        }
+        // 假设有已经通过的，并且页面重复，才会
+//        List<PaperDO> allByChapterId = paperRepository.findAllByChapterId(chapterId);
+//        for (PaperDO paperDO : allByChapterId) {
+//            if (Objects.equals(paperDO.getNum(), collaborateDO.getNum())){
+//                return AjaxResult.error("已经通过该页了");
+//            }
+//        }
 
         PaperDO paperDO = new PaperDO();
         paperDO.setChapterId(chapterId);
@@ -102,6 +105,8 @@ public class CollaborateServiceImpl implements ICollaborateService {
         paperDO.setInfo(collaborateDO.getInfo());
         paperDO.setCreateBy(collaborateDO.getPatternId());
         paperDO.setId(CommonUtil.getRandomCode());
+        // 设定成完成状态
+        paperDO.setStatus(PaperStatus.FINISH.name());
         PaperDO insert = paperRepository.insert(paperDO);
         collaborateDO.setPass(true);
         // 将本 collaborate设置未通过

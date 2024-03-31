@@ -21,6 +21,8 @@ public interface ICartoonService {
 
     AjaxResult cartoonInfo(String cartoonId);
 
+    AjaxResult chapterList(String cartoonId);
+
     AjaxResult meJoin();
 
     AjaxResult meCreate();
@@ -32,6 +34,10 @@ public interface ICartoonService {
     AjaxResult cartoonPatternList(String cartoonId);
 
     Boolean checkCreate(String userId, String cartoonId);
+
+
+    AjaxResult cartoonListByTag(String tag);
+
 
 
 }
