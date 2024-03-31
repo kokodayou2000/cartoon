@@ -1,7 +1,7 @@
 package org.example.controller;
 
 import org.example.core.AjaxResult;
-import org.example.service.FileService;
+import org.example.service.IFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileController {
 
     @Autowired
-    FileService fileService;
+    IFileService fileService;
 
     @PostMapping("/upload")
     public AjaxResult upload(
