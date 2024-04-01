@@ -74,9 +74,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{user-service}}/api/user/v1/register",
+							"raw": "{{remote-user-service}}/api/user/v1/register",
 							"host": [
-								"{{user-service}}"
+								"{{remote-user-service}}"
 							],
 							"path": [
 								"api",
@@ -1729,13 +1729,13 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "{{user1}}",
+								"value": "{{token}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{    \r\n    \"chargeId\":\"1\",\r\n    \"clientType\": \"H5\"\r\n}\r\n    ",
+							"raw": "{    \r\n    \"chargeId\":\"3\",\r\n    \"clientType\": \"H5\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1743,9 +1743,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{order-service}}/api/v1/order/charge",
+							"raw": "{{remote-order-service}}/api/v1/order/charge",
 							"host": [
-								"{{order-service}}"
+								"{{remote-order-service}}"
 							],
 							"path": [
 								"api",
@@ -1808,7 +1808,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{        \r\n    \"chapterIdList\":[\"9610511337\"],\r\n    \"cartoonId\":\"2354675214\",\r\n    \"clientType\": \"H5\",\r\n    \"payType\":\"ALIPAY\",\r\n    \"totalAmount\":\"100\"\r\n}\r\n    ",
+							"raw": "{        \r\n    \"chapterIdList\":[\"2544171998\"],\r\n    \"cartoonId\":\"0583389443\",\r\n    \"clientType\": \"H5\",\r\n    \"payType\":\"ALIPAY\",\r\n    \"totalAmount\":\"100\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1816,9 +1816,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{order-service}}/api/v1/order/userBuy",
+							"raw": "{{remote-order-service}}/api/v1/order/userBuy",
 							"host": [
-								"{{order-service}}"
+								"{{remote-order-service}}"
 							],
 							"path": [
 								"api",
@@ -2085,7 +2085,7 @@
 		},
 		{
 			"key": "token",
-			"value": "p-projecteyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwcm9qZWN0IiwiaWQiOiIyMTMyMjM0MTMxMjMxMjMyMTMxIiwibmFtZSI6IlRydWNrIiwibWFpbCI6IjAzMDYyMDEyMDJAdHV0ZS5lZHUuY24iLCJpYXQiOjE3MTE4NTQzMzcsImV4cCI6MTcxMjQ1OTEzN30.RudQRAhyRTL11hcpx-wB_LlOuFJsrmBUWGqAlRkCLfg",
+			"value": "p-projecteyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwcm9qZWN0IiwiaWQiOiIxNzYwNjM5NDU4Njk0MTQ4MDk4IiwibmFtZSI6InUxIiwibWFpbCI6Imtva29kYXlvdTIwMDBAMTI2LmNvbSIsImlhdCI6MTcxMTk3NDE5NCwiZXhwIjoxNzEyNTc4OTk0fQ.zBAVzeIMOhqlGDzalRkC97nBjhcVTtnWBMYvZidyc80",
 			"type": "string"
 		},
 		{
