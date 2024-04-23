@@ -38,4 +38,7 @@ public interface UserService extends IService<UserDO> {
     List<UserVO> batchSearch(List<String> userIdList);
 
     AjaxResult searchUser(String username);
+
+    AjaxResult info(String id);
+
 }

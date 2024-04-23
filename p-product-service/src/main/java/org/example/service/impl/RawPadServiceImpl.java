@@ -1,5 +1,6 @@
 package org.example.service.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.example.core.AjaxResult;
 import org.example.interceptor.TokenCheckInterceptor;
 import org.example.model.BaseUser;
@@ -10,6 +11,7 @@ import org.example.request.CreateRawPadReq;
 import org.example.service.IRawPadService;
 import org.example.utils.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -21,6 +23,7 @@ public class RawPadServiceImpl implements IRawPadService {
     private RawPadRepository rawPadRepository;
 
 
+
     @Override
     public AjaxResult createRawPad(CreateRawPadReq req) {
         BaseUser baseUser = TokenCheckInterceptor.tl.get();
@@ -29,16 +32,20 @@ public class RawPadServiceImpl implements IRawPadService {
         if (rawPadDO != null){
             return AjaxResult.success("已经创建过了");
         }
+
+        // 创建初始化的rawPad
         RawPadDO rawPad = new RawPadDO();
         rawPad.setId(CommonUtil.getRandomCode());
         rawPad.setPaperId(req.getPaperId());
-
         rawPad.setUserId(baseUser.getId());
         rawPad.setPenList(new ArrayList<>());
         RawPadDO insert = rawPadRepository.insert(rawPad);
         return AjaxResult.success(insert);
     }
 
+
+    // 当用户创建完paper之后，获取该paperID下所有的笔迹
+    // 一对多关系 paper 对应多个RawPadDO
     @Override
     public AjaxResult workRawPad(String paperId) {
         List<RawPadDO> rawPadDO = rawPadRepository.queryAllByPaperId(paperId);
@@ -49,7 +56,8 @@ public class RawPadServiceImpl implements IRawPadService {
 
     @Override
     public AjaxResult UpdateRawPadReq(UpdateRawPadReq req) {
-        Optional<RawPadDO> byId = rawPadRepository.findById(req.getId());
+        String paperId = req.getId();
+        Optional<RawPadDO> byId = rawPadRepository.findById(paperId);
         if (byId.isEmpty()){
             return AjaxResult.error();
         }
@@ -62,6 +70,4 @@ public class RawPadServiceImpl implements IRawPadService {
         RawPadDO save = rawPadRepository.save(rawPadDO);
         return AjaxResult.success(save);
     }
-
-
 }

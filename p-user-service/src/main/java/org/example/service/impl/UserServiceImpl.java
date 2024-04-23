@@ -135,6 +135,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
     }
 
     @Override
+    public AjaxResult info(String id) {
+        UserDO userDO = userMapper.selectById(id);
+        UserVO userVO = new UserVO();
+        BeanUtils.copyProperties(userDO,userVO);
+        return AjaxResult.success(userVO);
+    }
+
+    @Override
     public AjaxResult pay(UserChargeReq req) {
         String userId = req.getUserId();
         UserDO userDO = userMapper.selectById(userId);

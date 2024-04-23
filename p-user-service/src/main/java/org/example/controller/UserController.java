@@ -22,6 +22,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/info/{id}")
+    public AjaxResult info(
+            @PathVariable("id") String id){
+        return userService.info(id);
+    }
+
+
     @GetMapping("/searchUser/{username}")
     public AjaxResult searchUser(
             @PathVariable("username") String username){

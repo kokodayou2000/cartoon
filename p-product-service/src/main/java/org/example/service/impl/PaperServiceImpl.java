@@ -101,6 +101,7 @@ public class PaperServiceImpl implements IPaperService {
         return AjaxResult.success(partnerInfoList);
     }
 
+
     @Override
     public AjaxResult createPaper(CreatePaperReq req) {
         PaperDO paperDO = new PaperDO();
