@@ -1,13 +1,16 @@
 package org.example.service;
 
 import org.example.core.AjaxResult;
+import org.example.model.PaperDO;
 import org.example.request.AddPaperPatternReq;
 import org.example.request.CreatePaperReq;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 public interface IPaperService {
 
-    AjaxResult finishList(String chapterId);
+    List<PaperDO> finishList(String chapterId);
 
     AjaxResult patternInfo(String cartoonId);
 
@@ -17,6 +20,6 @@ public interface IPaperService {
 
     AjaxResult checkCanJoin();
 
-    AjaxResult list(String chapterId);
+    List<PaperDO> list(String chapterId);
 }
 

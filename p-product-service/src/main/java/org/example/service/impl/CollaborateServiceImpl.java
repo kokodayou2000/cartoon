@@ -2,7 +2,7 @@ package org.example.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.core.AjaxResult;
-import org.example.enums.PaperStatus;
+import org.example.enums.status.CartoonStatus;
 import org.example.feign.IFileServer;
 import org.example.interceptor.TokenCheckInterceptor;
 import org.example.model.*;
@@ -90,13 +90,6 @@ public class CollaborateServiceImpl implements ICollaborateService {
 
 
         String chapterId = collaborateDO.getChapterId();
-        // 假设有已经通过的，并且页面重复，才会
-//        List<PaperDO> allByChapterId = paperRepository.findAllByChapterId(chapterId);
-//        for (PaperDO paperDO : allByChapterId) {
-//            if (Objects.equals(paperDO.getNum(), collaborateDO.getNum())){
-//                return AjaxResult.error("已经通过该页了");
-//            }
-//        }
 
         PaperDO paperDO = new PaperDO();
         paperDO.setChapterId(chapterId);
@@ -106,7 +99,7 @@ public class CollaborateServiceImpl implements ICollaborateService {
         paperDO.setCreateBy(collaborateDO.getPatternId());
         paperDO.setId(CommonUtil.getRandomCode());
         // 设定成完成状态
-        paperDO.setStatus(PaperStatus.FINISH.name());
+        paperDO.setStatus(CartoonStatus.PAPER_STATUS_FINISH.name());
         PaperDO insert = paperRepository.insert(paperDO);
         collaborateDO.setPass(true);
         // 将本 collaborate设置未通过

@@ -2,7 +2,7 @@ package org.example.service.impl;
 
 
 import org.example.core.AjaxResult;
-import org.example.enums.CartoonStatus;
+import org.example.enums.status.CartoonStatus;
 import org.example.feign.IUserServer;
 import org.example.interceptor.TokenCheckInterceptor;
 import org.example.model.BaseUser;
@@ -51,8 +51,6 @@ public class ChapterServiceImpl implements IChapterService {
             List<PaperDO> allByChapterId = paperRepository.findAllByChapterId(chapterDO.getId());
             return AjaxResult.success(allByChapterId);
         }
-        // 如果是收费的，查看用户是否已经购买了
-        // TODO feign
         return AjaxResult.error("收费章节");
     }
 
@@ -69,11 +67,12 @@ public class ChapterServiceImpl implements IChapterService {
         if (!checkValidation1(cartoonDO)){
             return AjaxResult.error("创建失败");
         }
+
         ChapterDO genChapter = genChapter();
         genChapter.setCartoonId(req.getCartoonId());
         genChapter.setTitle(req.getTitle());
         genChapter.setFree(req.getFree());
-        genChapter.setStatus(CartoonStatus.DOING.name());
+        genChapter.setStatus(CartoonStatus.CHAPTER_STATUS_DOING.name());
         genChapter.setNum(req.getNum());
         Set<String> set = new HashSet<>();
         set.add(TokenCheckInterceptor.tl.get().getId());
@@ -104,6 +103,7 @@ public class ChapterServiceImpl implements IChapterService {
 
     @Override
     public AjaxResult updateChapterStatus(UpdateChapterStatusReq req) {
+
         String chapterId = req.getChapterId();
         Optional<ChapterDO> byId = chapterRepository.findById(chapterId);
         if (byId.isEmpty()){
@@ -114,12 +114,21 @@ public class ChapterServiceImpl implements IChapterService {
         if (!checkValidation(chapterDO)){
             return AjaxResult.error("更新失败");
         }
-        if (CartoonStatus.DOING.name().equals(req.getStatus()) || CartoonStatus.FINISH.name().equals(req.getStatus())){
+        if ("finished".equals(req.getStatus()) || "doing".equals(req.getStatus())){
             chapterDO.setStatus(req.getStatus());
+            chapterDO.setFinishedPDFUrl(req.getUrl());
             ChapterDO save = chapterRepository.save(chapterDO);
             return AjaxResult.success(save);
         }
         return AjaxResult.error("状态只有doing or finished");
+    }
+
+    @Override
+    public String getPdfUrlById(String chapterId) {
+        Optional<ChapterDO> byId = chapterRepository.findById(chapterId);
+        // todo 合法性校验
+        ChapterDO chapterDO = byId.get();
+        return chapterDO.getFinishedPDFUrl();
     }
 
 

@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: c-file-service
+  cloud:
+    nacos:
+      server-addr: 10.12.47.202:8848
+      config:
+        server-addr: 10.12.47.202:8848
+        file-extension: yaml
+  config:
+    import:
+      - optional:nacos:c-file-service-dev.yaml  # 监听 DEFAULT_GROUP:test.yml
+  profiles:
+    active: dev

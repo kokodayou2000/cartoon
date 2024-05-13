@@ -20,6 +20,10 @@ public class ChapterDO {
     @Field("_id")
     private String id;
 
+    // 对应完成的paperId，只有当章节完成后才可能获取到
+    private String finishedPDFUrl;
+
+
     // 对应的 漫画 id
     private String cartoonId;
 

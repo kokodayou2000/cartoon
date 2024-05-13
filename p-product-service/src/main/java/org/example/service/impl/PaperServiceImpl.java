@@ -2,14 +2,12 @@ package org.example.service.impl;
 
 
 import org.example.core.AjaxResult;
-import org.example.enums.CartoonStatus;
-import org.example.enums.PaperStatus;
+import org.example.enums.status.CartoonStatus;
 import org.example.interceptor.TokenCheckInterceptor;
 import org.example.model.BaseUser;
 import org.example.model.ChapterDO;
 import org.example.model.PaperDO;
 import org.example.model.PartnerInfo;
-import org.example.repository.CartoonRepository;
 import org.example.repository.ChapterRepository;
 import org.example.repository.PaperRepository;
 import org.example.request.AddPaperPatternReq;
@@ -63,16 +61,16 @@ public class PaperServiceImpl implements IPaperService {
 
 
     @Override
-    public AjaxResult finishList(String chapterId) {
-        List<PaperDO> paperList = paperRepository.findAllByChapterIdAndStatus(chapterId,PaperStatus.FINISH.name());
+    public List<PaperDO> finishList(String chapterId) {
+        List<PaperDO> paperList = paperRepository.findAllByChapterIdAndStatus(chapterId,CartoonStatus.PAPER_STATUS_FINISH.name());
         paperList.sort(Comparator.comparingInt(PaperDO::getNum));
-        return AjaxResult.success(paperList);
+        return paperList;
     }
     @Override
-    public AjaxResult list(String chapterId) {
+    public List<PaperDO>  list(String chapterId) {
         List<PaperDO> paperList = paperRepository.findAllByChapterId(chapterId);
         paperList.sort(Comparator.comparingInt(PaperDO::getNum));
-        return AjaxResult.success(paperList);
+        return paperList;
     }
 
     @Override
@@ -80,7 +78,7 @@ public class PaperServiceImpl implements IPaperService {
         HashMap<String, Integer> hashMap = new HashMap<>();
 
         // 根据漫画id，获取该漫画下所有完成的章节
-        List<ChapterDO> list = chapterRepository.findAllByCartoonIdAndStatus(cartoonId, CartoonStatus.FINISH.name());
+        List<ChapterDO> list = chapterRepository.findAllByCartoonIdAndStatus(cartoonId, CartoonStatus.CARTOON_STATUS_FINISH.name());
         // 获取全部的章节id
         List<String> idList = list.stream().map(ChapterDO::getId).collect(Collectors.toList());
         for (String chapterId : idList) {
@@ -107,7 +105,7 @@ public class PaperServiceImpl implements IPaperService {
         PaperDO paperDO = new PaperDO();
         BeanUtils.copyProperties(req,paperDO);
         paperDO.setId(CommonUtil.getRandomCode());
-        paperDO.setStatus(PaperStatus.DOING.name());
+        paperDO.setStatus(CartoonStatus.PAPER_STATUS_DOING.name());
         paperRepository.save(paperDO);
         // 创建对应的raw对象
         CreateRawPadReq createRawPadReq = new CreateRawPadReq();

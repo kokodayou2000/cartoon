@@ -24,16 +24,19 @@
         <java.version>11</java.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <spring.boot.version>2.3.12.RELEASE</spring.boot.version>
-        <spring.cloud.version>Hoxton.SR12</spring.cloud.version>
-        <alibaba.cloud.version>2.2.9.RELEASE</alibaba.cloud.version>
-<!--        <spring.boot.version>3.0.2</spring.boot.version>-->
-<!--        <spring.cloud.version>2022.0.0</spring.cloud.version>-->
-<!--        <alibaba.cloud.version>2022.0.0.0-RC2</alibaba.cloud.version>-->
-        <mybatisplus.boot.starter.version>3.4.2</mybatisplus.boot.starter.version>
-        <lombok.version>1.18.16</lombok.version>
+<!--        <spring.boot.version>2.3.12.RELEASE</spring.boot.version>-->
+<!--        <spring.cloud.version>Hoxton.SR12</spring.cloud.version>-->
+<!--        <alibaba.cloud.version>2.2.9.RELEASE</alibaba.cloud.version>-->
+        <spring.boot.version>3.0.2</spring.boot.version>
+        <spring.cloud.version>2022.0.0</spring.cloud.version>
+        <alibaba.cloud.version>2022.0.0.0-RC2</alibaba.cloud.version>
+        <mybatisplus.boot.starter.version>3.5.4.1</mybatisplus.boot.starter.version>
+        <mybatis.boot.starter.version>3.0.0</mybatis.boot.starter.version>
+        <lombok.version>1.18.28</lombok.version>
+        <javax.servlet.version>3.1.0</javax.servlet.version>
         <commons.lang3.version>3.9</commons.lang3.version>
         <commons.codec.version>1.15</commons.codec.version>
+        <spring.cloud.starter.bootstrap.version>4.0.1</spring.cloud.starter.bootstrap.version>
         <docker.image.prefix>p-cloud</docker.image.prefix>
         <skipTests>true</skipTests>
 
@@ -43,7 +46,21 @@
     <!--锁定版本-->
     <dependencyManagement>
         <dependencies>
-
+            <dependency>
+                <groupId>com.jlefebure</groupId>
+                <artifactId>spring-boot-starter-minio</artifactId>
+                <version>1.4</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-bootstrap</artifactId>
+                <version>${spring.cloud.starter.bootstrap.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${javax.servlet.version}</version>
+            </dependency>
             <!--https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies/2.3.3.RELEASE-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -71,13 +88,30 @@
                 <scope>import</scope>
             </dependency>
 
-
-            <!--mybatis plus和springboot整合-->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${mybatisplus.boot.starter.version}</version>
+                <version>3.5.2</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>3.0.1</version>
+            </dependency>
+<!--            &lt;!&ndash;mybatis plus和springboot整合&ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>com.baomidou</groupId>-->
+<!--                <artifactId>mybatis-plus-boot-starter</artifactId>-->
+<!--                <version>${mybatisplus.boot.starter.version}</version>-->
+<!--            </dependency>-->
+
+<!--            &lt;!&ndash;springboot3.0的版本中 mybatis也要3.0 否则报错&ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>org.mybatis.spring.boot</groupId>-->
+<!--                <artifactId>mybatis-spring-boot-starter</artifactId>-->
+<!--                <version>${mybatis.boot.starter.version}</version>-->
+<!--            </dependency>-->
 
             <!--https://mvnrepository.com/artifact/org.projectlombok/lombok/1.18.16-->
             <!--scope=provided，说明它只在编译阶段生效，不需要打入包中, Lombok在编译期将带Lombok注解的Java文件正确编译为完整的Class文件-->
@@ -187,19 +221,19 @@
     </pluginRepositories>
 
     <!--module不用添加打包版本信息-->
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring.boot.version}</version>
-                <configuration>
-                    <fork>true</fork>
-                    <addResources>true</addResources>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--                <version>${spring.boot.version}</version>-->
+<!--                <configuration>-->
+<!--                    <fork>true</fork>-->
+<!--                    <addResources>true</addResources>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
 
 
 </project>

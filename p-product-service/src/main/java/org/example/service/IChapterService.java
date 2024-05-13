@@ -18,4 +18,7 @@ public interface IChapterService {
     AjaxResult chapterPatternList(String chapterId);
 
     AjaxResult updateChapterStatus(UpdateChapterStatusReq req);
+
+    String getPdfUrlById(String chapterId);
+
 }

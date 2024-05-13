@@ -1,11 +1,12 @@
 package org.example.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.InetAddress;
@@ -130,7 +131,7 @@ public class CommonUtil {
      * @param response 响应对象
      * @param obj 数据
      */
-    public static void sendJsonMessage(HttpServletResponse response,Object obj){
+    public static void sendJsonMessage(HttpServletResponse response, Object obj){
         //用来做序列化的
         ObjectMapper objectMapper = new ObjectMapper();
         response.setContentType("application/json;charset=utf-8");

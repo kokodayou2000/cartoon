@@ -5,14 +5,12 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.example.core.AjaxResult;
-import org.example.enums.ChapterItemStatus;
-import org.example.enums.ProductOrderStateEnum;
+import org.example.enums.status.ChapterItemStatus;
 import org.example.feign.ProductFeignService;
 import org.example.feign.UserFeignService;
 import org.example.interceptor.TokenCheckInterceptor;
 import org.example.mapper.ChapterItemMapper;
 import org.example.model.*;
-import org.example.request.ChargeReq;
 import org.example.request.UserChargeReq;
 import org.example.service.ChapterItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,8 +67,8 @@ public class ChapterItemServiceImpl extends ServiceImpl<ChapterItemMapper, Chapt
         List<ChapterItemDO> chapterList = chapterItemMapper.selectList(eq);
 
 
-        Integer num = new Integer(0);
-        Integer totalPoint = new Integer(0);
+        Integer num = Integer.valueOf(0);
+        Integer totalPoint = Integer.valueOf(0);
         for (ChapterItemDO chapterItemDO : chapterList) {
             num += 1;
             totalPoint += chapterItemDO.getPrice();
@@ -154,7 +152,7 @@ public class ChapterItemServiceImpl extends ServiceImpl<ChapterItemMapper, Chapt
         if (partnerInfoList.size() <= 0){
             return AjaxResult.error();
         }
-        Integer totalPaperNum = new Integer(0);
+        Integer totalPaperNum = Integer.valueOf(0);
         for (PartnerInfo partnerInfo : partnerInfoList) {
             totalPaperNum += partnerInfo.getPaperNum();
         }

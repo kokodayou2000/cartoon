@@ -56,8 +56,10 @@ public class CartoonServiceImpl implements ICartoonService {
             pageRequest  = PageRequest.of(page,size);
         }
 
-        Page<CartoonDO> dos = cartoonRepository.findAll(pageRequest);
-        return AjaxResult.success(dos);
+//        Page<CartoonDO> dos = cartoonRepository.findAll(pageRequest);
+        Iterable<CartoonDO> all = cartoonRepository.findAll();
+
+        return AjaxResult.success(all);
     }
 
     @Override

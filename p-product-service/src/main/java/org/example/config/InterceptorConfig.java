@@ -27,6 +27,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
                         "/api/v1/cartoon/list/**",
                         "/api/v1/cartoon/cartoonInfo/**",
                         "/api/v1/chapter/chapterPatternList/**"
+//                        "/api/v1/paper/toPdf/**"
                 );
     }
 

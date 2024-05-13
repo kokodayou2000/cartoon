@@ -1,12 +1,20 @@
 package org.example.controller;
 
 import org.example.core.AjaxResult;
+import org.example.model.PaperDO;
 import org.example.request.AddPaperPatternReq;
 import org.example.request.CreatePaperReq;
+import org.example.request.UpdateChapterStatusReq;
+import org.example.service.IChapterService;
 import org.example.service.IPaperService;
+import org.example.service.IPdfService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/paper")
@@ -14,6 +22,40 @@ public class PaperController {
 
     @Autowired
     private IPaperService paperService;
+
+    @Autowired
+    private IPdfService pdfService;
+
+    @Autowired
+    private IChapterService chapterService;
+
+    /**
+     * 将图片转换成 pdf 文件
+     * @return
+     * @throws IOException
+     */
+//    @GetMapping("/toPdf/{chapterId}")
+//    public AjaxResult toPdf(
+//            @PathVariable("chapterId") String chapterId
+//    )  {
+//        // 获取该章节下 审核通过的 paper
+//        List<PaperDO> list = paperService.finishList(chapterId);
+//        // 将 paperDO -> urlList
+//        List<String> urlList = list.stream().map(PaperDO::getUrl).collect(Collectors.toList());
+//
+//        String url = pdfService.createPdfFromImage(urlList);
+//        // 将url保存到 chapterId;
+//        chapterService.updateChapterStatus(new UpdateChapterStatusReq(chapterId,"finished",url));
+//        return AjaxResult.success(url);
+//    }
+
+    @GetMapping("/getPdf/{chapterId}")
+    public AjaxResult getPdf(
+            @PathVariable("chapterId") String chapterId
+    )  {
+        String url = chapterService.getPdfUrlById(chapterId);
+        return AjaxResult.success(url);
+    }
 
 
     /**
@@ -28,7 +70,8 @@ public class PaperController {
     public AjaxResult finishList(
             @PathVariable("chapterId") String chapterId
     ){
-        return paperService.finishList(chapterId);
+        List<PaperDO> paperDOS = paperService.finishList(chapterId);
+        return AjaxResult.success(paperDOS);
     }
 
     /**
@@ -40,7 +83,8 @@ public class PaperController {
     public AjaxResult list(
             @PathVariable("chapterId") String chapterId
     ){
-        return paperService.list(chapterId);
+        List<PaperDO> list = paperService.list(chapterId);
+        return AjaxResult.success(list);
     }
 
     /**

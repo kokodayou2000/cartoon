@@ -11,6 +11,7 @@ import org.example.config.RabbitMQConfig;
 import org.example.constant.TimeConstant;
 import org.example.core.AjaxResult;
 import org.example.enums.*;
+import org.example.enums.status.ChapterItemStatus;
 import org.example.feign.UserFeignService;
 import org.example.interceptor.TokenCheckInterceptor;
 import org.example.mapper.ChargeMapper;
@@ -229,7 +230,7 @@ public class ProductOrderServiceImpl extends ServiceImpl<ProductOrderMapper, Pro
 
 
         // 如果结果为空，则未支付，取消订单
-        if (org.apache.commons.lang.StringUtils.isBlank(payResult)){
+        if (org.apache.commons.lang3.StringUtils.isBlank(payResult)){
             // 只有是NEW状态的时候，才会变成取消状态
             if (productOrderDO.getState().equalsIgnoreCase(ProductOrderStateEnum.NEW.name())){
                 productOrderDO.setState(ProductOrderStateEnum.CANCEL.name());

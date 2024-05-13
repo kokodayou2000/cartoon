@@ -3,6 +3,7 @@ package org.example.service.impl;
 import com.jlefebure.spring.boot.minio.MinioException;
 import com.jlefebure.spring.boot.minio.MinioService;
 import io.minio.ObjectStat;
+import jakarta.annotation.Resource;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
@@ -28,15 +29,18 @@ import java.util.Objects;
 public class FileServiceImpl implements IFileService {
 
 
-    @Autowired
-    private MinioConfig minioConfig;
+    private final MinioConfig minioConfig;
 
-    @Autowired
+    @Resource
     private MinioService minioService;
 
-    @Autowired
-    private ImageRepository imageRepository;
+    private final ImageRepository imageRepository;
 
+    @Autowired
+    public FileServiceImpl(MinioConfig minioConfig,ImageRepository imageRepository){
+        this.minioConfig = minioConfig;
+        this.imageRepository = imageRepository;
+    }
 
     @SneakyThrows
     @Override

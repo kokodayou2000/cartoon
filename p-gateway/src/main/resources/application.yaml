@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: c-gateway-service
+  cloud:
+    nacos:
+      config:
+        server-addr: 10.12.47.202:8848
+        file-extension: yaml
+      server-addr: 10.12.47.202:8848
+  config:
+    import:
+      - optional:nacos:${spring.application.name}.${spring.cloud.nacos.config.file-extension}
+  profiles:
+    active: dev

@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: c-order-service
+  cloud:
+    nacos:
+      server-addr: 10.12.47.202:8848
+      config:
+        server-addr: 10.12.47.202:8848
+        file-extension: yaml
+  profiles:
+    active: dev
+  config:
+    import:
+      - optional:nacos:c-order-service-dev.yaml  # 监听 DEFAULT_GROUP:test.yml
+#      - nacos: ${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+
