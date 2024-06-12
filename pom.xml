@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>product</artifactId>
+    <artifactId>cartoon-end</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
@@ -17,6 +17,7 @@
         <module>p-gateway</module>
         <module>p-file-service</module>
         <module>p-order-service</module>
+        <module>p-file-service</module>
     </modules>
 
     <properties>

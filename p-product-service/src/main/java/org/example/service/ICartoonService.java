@@ -13,7 +13,7 @@ public interface ICartoonService {
 
     AjaxResult createCartoon(CreateCartoonReq req);
 
-    AjaxResult uploadCoverImg(MultipartFile file, String id);
+    AjaxResult uploadCoverImg(String url, String id);
 
     AjaxResult updateCartoonInfo(UpdateCartoonReq req);
 

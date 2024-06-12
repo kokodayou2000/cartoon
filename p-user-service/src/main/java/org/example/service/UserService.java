@@ -23,7 +23,7 @@ public interface UserService extends IService<UserDO> {
 
     UserVO findUserDetail();
 
-    AjaxResult uploadAvatar(MultipartFile file);
+    AjaxResult uploadAvatar(String url);
 
     AjaxResult exist(String userId);
 

@@ -21,7 +21,7 @@ p-file-service/.gitignore
 p-file-service/src/main/resources/application.bak
 
 .idea/*.xml
-
+.idea/*.json
 
 
 ### IntelliJ IDEA ###

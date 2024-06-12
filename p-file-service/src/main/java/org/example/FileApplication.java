@@ -9,7 +9,6 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EnableFeignClients
 @EnableDiscoveryClient
-@ComponentScan({"com.jlefebure.spring.boot.minio.*"})
 public class FileApplication {
     public static void main(String[] args) {
         SpringApplication.run(FileApplication.class,args);

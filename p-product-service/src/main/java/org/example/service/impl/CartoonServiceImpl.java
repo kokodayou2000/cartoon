@@ -1,15 +1,13 @@
 package org.example.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import lombok.extern.slf4j.Slf4j;
 import org.example.core.AjaxResult;
-import org.example.feign.IFileServer;
 import org.example.feign.IUserServer;
 import org.example.interceptor.TokenCheckInterceptor;
 import org.example.model.BaseUser;
 import org.example.model.CartoonDO;
 import org.example.model.ChapterDO;
-import org.example.model.ImageDO;
 import org.example.repository.CartoonRepository;
 import org.example.repository.ChapterRepository;
 import org.example.request.AddPatternsReq;
@@ -20,14 +18,12 @@ import org.example.response.CartoonInfo;
 import org.example.service.ICartoonService;
 import org.example.utils.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static org.example.constant.CartoonConstant.*;
 
@@ -41,8 +37,6 @@ public class CartoonServiceImpl implements ICartoonService {
     @Autowired
     private ChapterRepository chapterRepository;
 
-    @Autowired
-    private IFileServer fileServer;
 
     @Autowired
     private IUserServer userServer;
@@ -90,7 +84,7 @@ public class CartoonServiceImpl implements ICartoonService {
     }
 
     @Override
-    public AjaxResult uploadCoverImg(MultipartFile file, String id) {
+    public AjaxResult uploadCoverImg(String url, String id) {
 
         Optional<CartoonDO> byId = cartoonRepository.findById(id);
         if (byId.isEmpty()){
@@ -103,17 +97,9 @@ public class CartoonServiceImpl implements ICartoonService {
             return AjaxResult.error("权限错误");
         }
 
-        AjaxResult result = fileServer.uploadAvatar(file);
 
-        String code = String.valueOf(result.get("code"));
-        if (!Objects.equals(code, "200")){
-            return AjaxResult.error("上传封面失败");
-        }
         log.info("上传漫画头像 {} ",id);
-        Object imageDOMap = (Object) (result.get("data"));
-        ObjectMapper objectMapper = new ObjectMapper();
-        ImageDO imageDO = objectMapper.convertValue(imageDOMap, ImageDO.class);
-        cartoonDO.setCoverUrl(imageDO.getUrl());
+        cartoonDO.setCoverUrl(url);
         CartoonDO save = cartoonRepository.save(cartoonDO);
         return AjaxResult.success(save);
     }

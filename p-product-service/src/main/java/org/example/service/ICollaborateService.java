@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface ICollaborateService {
 
-    AjaxResult uploadPaperTemp(MultipartFile file, String info);
+    AjaxResult uploadPaperTemp(String url, String info);
 
     AjaxResult meCreateTemp();
 

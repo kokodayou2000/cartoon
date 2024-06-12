@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import jakarta.websocket.server.PathParam;
 import org.example.core.AjaxResult;
 import org.example.request.ActiveBannerReq;
 import org.example.service.IBannerService;
@@ -37,12 +38,12 @@ public class BannerController {
      * 获取轮播图的漫画列表
      * @return 轮播图漫画列表
      */
-    @PostMapping("/uploadBanner")
+    @PostMapping("/uploadBanner/{url}/{id}")
     public AjaxResult uploadBanner(
-            @RequestPart("file") MultipartFile file,
-            @RequestPart("id") String cartoonId
+            @PathVariable("url") String url,
+            @PathVariable("id") String cartoonId
     ) {
-        return bannerService.uploadBanner(file,cartoonId);
+        return bannerService.uploadBanner(url,cartoonId);
     }
 
     /**

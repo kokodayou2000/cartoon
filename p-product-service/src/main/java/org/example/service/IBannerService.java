@@ -16,7 +16,7 @@ public interface IBannerService {
      */
     List<BannerDO> list();
 
-    AjaxResult uploadBanner(MultipartFile file,String cartoonId);
+    AjaxResult uploadBanner(String url,String cartoonId);
 
 
     Boolean status(ActiveBannerReq req);

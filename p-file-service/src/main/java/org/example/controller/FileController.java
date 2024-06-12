@@ -18,15 +18,20 @@ public class FileController {
     public AjaxResult upload(
             @RequestPart("file") MultipartFile file
     ){
-        Object result = (Object) fileService.uploadToMinio(file);
+        Object result = fileService.uploadToMinio(file);
         return AjaxResult.success(result);
     }
 
-    @PostMapping("/upload1")
-    public AjaxResult upload1(
+    @GetMapping("/test")
+    public AjaxResult test(){
+        return AjaxResult.success(Thread.currentThread().getName());
+    }
+
+    @PostMapping("/updateAliyun")
+    public AjaxResult updateAliyun(
             @RequestPart("file") MultipartFile file
     ){
-        Object result = (Object) fileService.uploadToMinio(file);
+        Object result = (Object) fileService.uploadToAliyun(file);
         return AjaxResult.success(result);
     }
 

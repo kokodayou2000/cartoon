@@ -134,16 +134,16 @@ public class CartoonController {
 
     /**
      * 上传漫画的封面
-     * @param file 文件
+     * @param url 文件
      * @param id 漫画id
      * @return AjaxResult
      */
-    @PostMapping("/uploadCoverImg/{id}")
+    @PostMapping("/uploadCoverImg/{url}/{id}")
     public AjaxResult uploadCoverImg(
-            @RequestPart("file") MultipartFile file,
+            @PathVariable("url") String url,
             @PathVariable("id") String id
     ){
-        return cartoonService.uploadCoverImg(file,id);
+        return cartoonService.uploadCoverImg(url,id);
     }
 
     /**

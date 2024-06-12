@@ -22,12 +22,12 @@ public class CollaborateController {
     /**
      * 上传文件，保存文件url，以及简单的信息
      */
-    @PostMapping("/uploadPaperTemp")
+    @PostMapping("/uploadPaperTemp/{url}/{info}")
     public AjaxResult uploadPaperTemp(
-            @RequestPart("file") MultipartFile file,
-            @RequestPart("info") String info
+            @PathVariable("url") String url,
+            @PathVariable("info") String info
     ) {
-        return collaborateService.uploadPaperTemp(file,info);
+        return collaborateService.uploadPaperTemp(url,info);
     }
 
     /**

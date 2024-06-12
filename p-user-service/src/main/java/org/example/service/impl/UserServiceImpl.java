@@ -54,19 +54,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
     private IFileServer uploadAvatar;
 
     @Override
-    public AjaxResult uploadAvatar(MultipartFile file) {
+    public AjaxResult uploadAvatar(String url) {
         BaseUser baseUser = TokenCheckInterceptor.tl.get();
-        AjaxResult result = uploadAvatar.uploadAvatar(file);
-        Integer code = (Integer)result.get("code");
-        if (code != 200){
-            return AjaxResult.error("上传头像失败");
-        }
         String userId = baseUser.getId();
         UserDO userDO = userMapper.selectById(userId);
-        Object imageDOMap = (Object) (result.get("data"));
-        ObjectMapper objectMapper = new ObjectMapper();
-        ImageDO imageDO = objectMapper.convertValue(imageDOMap, ImageDO.class);
-        userDO.setHeadImg(imageDO.getUrl());
+
+        userDO.setHeadImg(url);
         int updateById = userMapper.updateById(userDO);
         if (updateById != 1){
             return AjaxResult.error("更新头像失败");

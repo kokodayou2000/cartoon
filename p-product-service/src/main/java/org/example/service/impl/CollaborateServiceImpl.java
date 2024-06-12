@@ -1,9 +1,7 @@
 package org.example.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.core.AjaxResult;
 import org.example.enums.status.CartoonStatus;
-import org.example.feign.IFileServer;
 import org.example.interceptor.TokenCheckInterceptor;
 import org.example.model.*;
 import org.example.repository.*;
@@ -14,7 +12,6 @@ import org.example.utils.CommonUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 
@@ -33,22 +30,14 @@ public class CollaborateServiceImpl implements ICollaborateService {
     @Autowired
     private ICartoonService cartoonService;
 
-    @Autowired
-    private IFileServer fileServer;
 
     @Override
-    public AjaxResult uploadPaperTemp(MultipartFile file, String info) {
-        AjaxResult result = fileServer.upload1(file);
-        if (!Objects.equals(String.valueOf(result.get("code")), "200")){
-            return AjaxResult.error("上传图片失败");
-        }
-        Object imageDOMap = (Object) (result.get("data"));
-        ObjectMapper objectMapper = new ObjectMapper();
-        ImageDO imageDO = objectMapper.convertValue(imageDOMap, ImageDO.class);
+    public AjaxResult uploadPaperTemp(String url, String info) {
+
         TempStorageDO tempStorageDO = new TempStorageDO();
         tempStorageDO.setId(CommonUtil.getRandomCode());
         tempStorageDO.setUploadTime(new Date());
-        tempStorageDO.setImgUrl(imageDO.getUrl());
+        tempStorageDO.setImgUrl(url);
         String userId = TokenCheckInterceptor.tl.get().getId();
         tempStorageDO.setUserId(userId);
         tempStorageDO.setInfo(info);

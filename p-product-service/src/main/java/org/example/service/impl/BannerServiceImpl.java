@@ -1,17 +1,15 @@
 package org.example.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.core.AjaxResult;
-import org.example.feign.IFileServer;
+
 import org.example.model.BannerDO;
-import org.example.model.ImageDO;
+
 import org.example.repository.BannerRepository;
 import org.example.request.ActiveBannerReq;
 import org.example.service.IBannerService;
 import org.example.utils.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Objects;
@@ -22,8 +20,6 @@ public class BannerServiceImpl implements IBannerService {
     @Autowired
     private BannerRepository bannerRepository;
 
-    @Autowired
-    private IFileServer fileServer;
 
     @Override
     public List<BannerDO> list() {
@@ -39,20 +35,13 @@ public class BannerServiceImpl implements IBannerService {
     }
 
     @Override
-    public AjaxResult uploadBanner(MultipartFile file,String cartoonId) {
-        AjaxResult result = fileServer.uploadAvatar(file);
-        Integer code = (Integer)result.get("code");
-        if (code != 200){
-            return AjaxResult.error("上传失败");
-        }
-        Object imageDOMap = (Object) (result.get("data"));
-        ObjectMapper objectMapper = new ObjectMapper();
-        ImageDO imageDO = objectMapper.convertValue(imageDOMap, ImageDO.class);
+    public AjaxResult uploadBanner(String url,String cartoonId) {
+
         BannerDO bannerDO = new BannerDO();
         bannerDO.setId(CommonUtil.getRandomCode());
         bannerDO.setActive(false);
         bannerDO.setCartoonId(cartoonId);
-        bannerDO.setCoverUrl(imageDO.getUrl());
+        bannerDO.setCoverUrl(url);
         BannerDO save = bannerRepository.save(bannerDO);
         return AjaxResult.success(save);
     }

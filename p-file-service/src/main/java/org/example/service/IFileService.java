@@ -6,4 +6,6 @@ import org.springframework.web.multipart.MultipartFile;
 public interface IFileService {
 
     ImageDO uploadToMinio(MultipartFile file);
+
+    ImageDO uploadToAliyun(MultipartFile file);
 }

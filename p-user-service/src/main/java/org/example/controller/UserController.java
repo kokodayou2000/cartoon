@@ -66,11 +66,11 @@ public class UserController {
     }
 
 
-    @PostMapping("/avatar")
+    @PostMapping("/avatar/{url}")
     public AjaxResult avatar(
-            @RequestPart("file") MultipartFile file
+            @PathVariable("url") String url
     ){
-        return userService.uploadAvatar(file);
+        return userService.uploadAvatar(url);
     }
 
     @PostMapping("/register")

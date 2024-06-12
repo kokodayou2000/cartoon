@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 @Data
 @Document("image")
 public class ImageDO {
+
     @Indexed(unique = true)
     @Id
     @MongoId
