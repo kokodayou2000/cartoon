@@ -1,9 +1,7 @@
 package org.example.service;
 
 import org.example.core.AjaxResult;
-import org.example.model.CollaborateDO;
-import org.example.request.CreateCollaborateReq;
-import org.springframework.web.multipart.MultipartFile;
+import org.example.request.collaborate.CreateCollaborateReq;
 
 public interface ICollaborateService {
 

@@ -1,11 +1,10 @@
 package org.example.service;
 
 import org.example.core.AjaxResult;
-import org.example.request.AddPatternsReq;
+import org.example.request.cartoon.AddPatternsReq;
 import org.example.request.CartoonSaleNumReq;
-import org.example.request.CreateCartoonReq;
-import org.example.request.UpdateCartoonReq;
-import org.springframework.web.multipart.MultipartFile;
+import org.example.request.cartoon.CreateCartoonReq;
+import org.example.request.cartoon.UpdateCartoonReq;
 
 public interface ICartoonService {
 

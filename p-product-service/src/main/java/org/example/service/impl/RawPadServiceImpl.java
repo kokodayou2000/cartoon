@@ -1,17 +1,15 @@
 package org.example.service.impl;
 
-import org.apache.commons.lang3.StringUtils;
 import org.example.core.AjaxResult;
 import org.example.interceptor.TokenCheckInterceptor;
 import org.example.model.BaseUser;
 import org.example.model.RawPadDO;
 import org.example.model.UpdateRawPadReq;
 import org.example.repository.RawPadRepository;
-import org.example.request.CreateRawPadReq;
+import org.example.request.raw.CreateRawPadReq;
 import org.example.service.IRawPadService;
 import org.example.utils.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.*;

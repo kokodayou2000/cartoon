@@ -1,10 +1,10 @@
 package org.example.service;
 
 import org.example.core.AjaxResult;
-import org.example.request.AddChapterPatternReq;
-import org.example.request.CreateChapterReq;
-import org.example.request.UpdateChapterInfoReq;
-import org.example.request.UpdateChapterStatusReq;
+import org.example.request.chapter.AddChapterPatternReq;
+import org.example.request.chapter.CreateChapterReq;
+import org.example.request.chapter.UpdateChapterInfoReq;
+import org.example.request.chapter.UpdateChapterStatusReq;
 
 public interface IChapterService {
     AjaxResult chapterInfo(String chapterId);

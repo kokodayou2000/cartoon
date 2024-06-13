@@ -3,8 +3,7 @@ package org.example.service;
 
 import org.example.core.AjaxResult;
 import org.example.model.BannerDO;
-import org.example.request.ActiveBannerReq;
-import org.springframework.web.multipart.MultipartFile;
+import org.example.request.banner.ActiveBannerReq;
 
 import java.util.List;
 
@@ -17,7 +16,6 @@ public interface IBannerService {
     List<BannerDO> list();
 
     AjaxResult uploadBanner(String url,String cartoonId);
-
 
     Boolean status(ActiveBannerReq req);
 

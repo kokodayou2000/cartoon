@@ -2,7 +2,7 @@ package org.example.controller;
 
 import org.example.core.AjaxResult;
 import org.example.model.UpdateRawPadReq;
-import org.example.request.CreateRawPadReq;
+import org.example.request.raw.CreateRawPadReq;
 import org.example.service.IRawPadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

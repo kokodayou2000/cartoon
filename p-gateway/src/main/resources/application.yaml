@@ -9,6 +9,14 @@ spring:
       server-addr: 10.12.47.202:8848
   config:
     import:
-      - optional:nacos:${spring.application.name}.${spring.cloud.nacos.config.file-extension}
-  profiles:
-    active: dev
+      - optional:nacos:c-gateway-service-dev.yaml
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include=*:
+
+logging:
+  level:
+    org.springframework.cloud.gateway: trace

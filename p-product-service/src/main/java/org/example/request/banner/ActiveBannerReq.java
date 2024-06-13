@@ -1,11 +1,11 @@
-package org.example.request;
+package org.example.request.banner;
 
 import lombok.Data;
 
 @Data
 public class ActiveBannerReq {
 
-    private String bannerId;
+    private String id;
 
     private Boolean active;
 }

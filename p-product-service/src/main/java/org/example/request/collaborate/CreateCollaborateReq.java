@@ -1,4 +1,4 @@
-package org.example.request;
+package org.example.request.collaborate;
 
 import lombok.Data;
 

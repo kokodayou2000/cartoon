@@ -1,15 +1,15 @@
 package org.example.controller;
 
 import org.example.core.AjaxResult;
-import org.example.request.AddPatternsReq;
+import org.example.request.cartoon.AddPatternsReq;
 import org.example.request.CartoonSaleNumReq;
-import org.example.request.CreateCartoonReq;
-import org.example.request.UpdateCartoonReq;
-import org.example.service.IBannerService;
+import org.example.request.base.UploadReq;
+import org.example.request.cartoon.CreateCartoonReq;
+import org.example.request.cartoon.UpdateCartoonReq;
 import org.example.service.ICartoonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/v1/cartoon")
@@ -128,22 +128,22 @@ public class CartoonController {
     public AjaxResult createCartoon(
             @RequestBody CreateCartoonReq req
     ){
+
         return cartoonService.createCartoon(req);
     }
 
 
     /**
      * 上传漫画的封面
-     * @param url 文件
-     * @param id 漫画id
      * @return AjaxResult
      */
-    @PostMapping("/uploadCoverImg/{url}/{id}")
+    @PostMapping("/uploadCoverImg")
     public AjaxResult uploadCoverImg(
-            @PathVariable("url") String url,
-            @PathVariable("id") String id
-    ){
-        return cartoonService.uploadCoverImg(url,id);
+            @RequestBody UploadReq req
+            ){
+        Assert.notNull(req.getUrl(),"链接不能为空");
+        Assert.notNull(req.getId(),"漫画id不能为空");
+        return cartoonService.uploadCoverImg(req.getUrl(),req.getId());
     }
 
     /**

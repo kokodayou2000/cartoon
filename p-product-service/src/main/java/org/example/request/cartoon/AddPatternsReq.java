@@ -1,8 +1,6 @@
-package org.example.request;
+package org.example.request.cartoon;
 
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 public class AddPatternsReq {

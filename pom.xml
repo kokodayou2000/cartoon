@@ -17,21 +17,20 @@
         <module>p-gateway</module>
         <module>p-file-service</module>
         <module>p-order-service</module>
-        <module>p-file-service</module>
     </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>11</java.version>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
 <!--        <spring.boot.version>2.3.12.RELEASE</spring.boot.version>-->
 <!--        <spring.cloud.version>Hoxton.SR12</spring.cloud.version>-->
 <!--        <alibaba.cloud.version>2.2.9.RELEASE</alibaba.cloud.version>-->
         <spring.boot.version>3.0.2</spring.boot.version>
         <spring.cloud.version>2022.0.0</spring.cloud.version>
         <alibaba.cloud.version>2022.0.0.0-RC2</alibaba.cloud.version>
-        <mybatisplus.boot.starter.version>3.5.4.1</mybatisplus.boot.starter.version>
+        <mybatisplus.boot.starter.version>3.5.5</mybatisplus.boot.starter.version>
         <mybatis.boot.starter.version>3.0.0</mybatis.boot.starter.version>
         <lombok.version>1.18.28</lombok.version>
         <javax.servlet.version>3.1.0</javax.servlet.version>
@@ -91,28 +90,15 @@
 
             <dependency>
                 <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>3.5.2</version>
+                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+                <version>${mybatisplus.boot.starter.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>3.0.1</version>
+                <version>${mybatis.boot.starter.version}</version>
             </dependency>
-<!--            &lt;!&ndash;mybatis plus和springboot整合&ndash;&gt;-->
-<!--            <dependency>-->
-<!--                <groupId>com.baomidou</groupId>-->
-<!--                <artifactId>mybatis-plus-boot-starter</artifactId>-->
-<!--                <version>${mybatisplus.boot.starter.version}</version>-->
-<!--            </dependency>-->
-
-<!--            &lt;!&ndash;springboot3.0的版本中 mybatis也要3.0 否则报错&ndash;&gt;-->
-<!--            <dependency>-->
-<!--                <groupId>org.mybatis.spring.boot</groupId>-->
-<!--                <artifactId>mybatis-spring-boot-starter</artifactId>-->
-<!--                <version>${mybatis.boot.starter.version}</version>-->
-<!--            </dependency>-->
 
             <!--https://mvnrepository.com/artifact/org.projectlombok/lombok/1.18.16-->
             <!--scope=provided，说明它只在编译阶段生效，不需要打入包中, Lombok在编译期将带Lombok注解的Java文件正确编译为完整的Class文件-->
@@ -140,11 +126,6 @@
             </dependency>
 
             <dependency>
-                <groupId>com.jlefebure</groupId>
-                <artifactId>spring-boot-starter-minio</artifactId>
-                <version>1.4</version>
-            </dependency>
-            <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>2.4</version>
@@ -153,7 +134,7 @@
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt</artifactId>
-                <version>0.7.0</version>
+                <version>0.12.5</version>
             </dependency>
 
             <!-- fastJson -->

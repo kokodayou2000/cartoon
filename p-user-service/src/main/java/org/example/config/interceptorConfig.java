@@ -29,7 +29,8 @@ public class interceptorConfig  implements WebMvcConfigurer {
                         "/api/*/user/balance/*",
                         "/api/*/user/pay/*",
                         "/api/*/user/charge",
-                        "/api/*/user/batchSearch"
+                        "/api/*/user/batchSearch",
+                        "/api/*/user/test"
                 );
 
     }

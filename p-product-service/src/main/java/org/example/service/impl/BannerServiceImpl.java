@@ -5,7 +5,7 @@ import org.example.core.AjaxResult;
 import org.example.model.BannerDO;
 
 import org.example.repository.BannerRepository;
-import org.example.request.ActiveBannerReq;
+import org.example.request.banner.ActiveBannerReq;
 import org.example.service.IBannerService;
 import org.example.utils.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +54,7 @@ public class BannerServiceImpl implements IBannerService {
                 // 将 active = false 的设置成 true
                 List<BannerDO> noActiveBannerList = bannerRepository.findBannerDOByActive(false);
                 for (BannerDO bannerDO : noActiveBannerList) {
-                    if (Objects.equals(bannerDO.getId(), req.getBannerId())) {
+                    if (Objects.equals(bannerDO.getId(), req.getId())) {
                         bannerDO.setActive(true);
                         bannerRepository.save(bannerDO);
                         return true;
@@ -64,7 +64,7 @@ public class BannerServiceImpl implements IBannerService {
         }else{
             // 将 active = true 的设置成 false
             for (BannerDO bannerDO : activeBannerList) {
-                if (Objects.equals(bannerDO.getId(), req.getBannerId())) {
+                if (Objects.equals(bannerDO.getId(), req.getId())) {
                     bannerDO.setActive(false);
                     bannerRepository.save(bannerDO);
                     return true;

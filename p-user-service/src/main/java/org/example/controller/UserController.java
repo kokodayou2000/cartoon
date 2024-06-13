@@ -2,6 +2,8 @@ package org.example.controller;
 
 
 import org.example.core.AjaxResult;
+import org.example.mapper.UserMapper;
+import org.example.model.UserDO;
 import org.example.request.UserChargeReq;
 import org.example.request.UserLoginRequest;
 import org.example.request.UserRegisterRequest;
@@ -22,10 +24,16 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
     @GetMapping("/info/{id}")
     public AjaxResult info(
             @PathVariable("id") String id){
         return userService.info(id);
+    }
+
+    @GetMapping("/test")
+    public AjaxResult test(){
+        return AjaxResult.success("test");
     }
 
 

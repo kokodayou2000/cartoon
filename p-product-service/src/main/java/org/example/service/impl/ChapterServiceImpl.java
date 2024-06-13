@@ -12,10 +12,10 @@ import org.example.model.PaperDO;
 import org.example.repository.CartoonRepository;
 import org.example.repository.ChapterRepository;
 import org.example.repository.PaperRepository;
-import org.example.request.AddChapterPatternReq;
-import org.example.request.CreateChapterReq;
-import org.example.request.UpdateChapterInfoReq;
-import org.example.request.UpdateChapterStatusReq;
+import org.example.request.chapter.AddChapterPatternReq;
+import org.example.request.chapter.CreateChapterReq;
+import org.example.request.chapter.UpdateChapterInfoReq;
+import org.example.request.chapter.UpdateChapterStatusReq;
 import org.example.service.IChapterService;
 import org.example.utils.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,7 +104,7 @@ public class ChapterServiceImpl implements IChapterService {
     @Override
     public AjaxResult updateChapterStatus(UpdateChapterStatusReq req) {
 
-        String chapterId = req.getChapterId();
+        String chapterId = req.getId();
         Optional<ChapterDO> byId = chapterRepository.findById(chapterId);
         if (byId.isEmpty()){
             return AjaxResult.error("查询章节失败");

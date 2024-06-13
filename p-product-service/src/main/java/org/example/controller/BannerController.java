@@ -1,12 +1,12 @@
 package org.example.controller;
 
-import jakarta.websocket.server.PathParam;
 import org.example.core.AjaxResult;
-import org.example.request.ActiveBannerReq;
+import org.example.request.banner.ActiveBannerReq;
+import org.example.request.base.UploadReq;
 import org.example.service.IBannerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/v1/banner")
@@ -38,12 +38,15 @@ public class BannerController {
      * 获取轮播图的漫画列表
      * @return 轮播图漫画列表
      */
-    @PostMapping("/uploadBanner/{url}/{id}")
+    @PostMapping("/uploadBanner")
     public AjaxResult uploadBanner(
-            @PathVariable("url") String url,
-            @PathVariable("id") String cartoonId
+            @RequestBody UploadReq req
     ) {
-        return bannerService.uploadBanner(url,cartoonId);
+        Assert.notNull(req.getUrl(),"链接不能为空");
+        Assert.notNull(req.getId(),"漫画id不能为空");
+
+        return bannerService.uploadBanner(req.getUrl(),req.getId());
+
     }
 
     /**

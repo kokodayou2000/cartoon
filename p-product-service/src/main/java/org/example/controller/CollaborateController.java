@@ -1,12 +1,12 @@
 package org.example.controller;
 
 import org.example.core.AjaxResult;
-import org.example.model.CollaborateDO;
-import org.example.request.CreateCollaborateReq;
+import org.example.request.collaborate.CreateCollaborateReq;
+import org.example.request.collaborate.UploadPaperTempReq;
 import org.example.service.ICollaborateService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  *  collaborate 是中间的状态，用户绘画之后，生成图片，并将图片发送给管理员
@@ -22,12 +22,15 @@ public class CollaborateController {
     /**
      * 上传文件，保存文件url，以及简单的信息
      */
-    @PostMapping("/uploadPaperTemp/{url}/{info}")
+    @PostMapping("/uploadPaperTemp")
     public AjaxResult uploadPaperTemp(
-            @PathVariable("url") String url,
-            @PathVariable("info") String info
+        @RequestBody UploadPaperTempReq req
     ) {
-        return collaborateService.uploadPaperTemp(url,info);
+        Assert.notNull(req.getUrl(),"url 不能为空");
+        if (req.getInfo() == null){
+            req.setInfo("空");
+        }
+        return collaborateService.uploadPaperTemp(req.getUrl(),req.getInfo());
     }
 
     /**

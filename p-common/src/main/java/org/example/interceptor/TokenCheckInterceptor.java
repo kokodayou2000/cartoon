@@ -54,7 +54,6 @@ public class TokenCheckInterceptor implements HandlerInterceptor {
             loginUser.setId(userId);
             loginUser.setName(name);
             loginUser.setMail(mail);
-            log.info("loginUser {}", loginUser);
             //request.setAttribute("loginUser",loginUser); //通过这种方式保存到下一个页面中
             //使用ThreadLocal保存登录用户信息
             tl.set(loginUser);

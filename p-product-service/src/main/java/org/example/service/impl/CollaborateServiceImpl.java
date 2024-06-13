@@ -5,7 +5,7 @@ import org.example.enums.status.CartoonStatus;
 import org.example.interceptor.TokenCheckInterceptor;
 import org.example.model.*;
 import org.example.repository.*;
-import org.example.request.CreateCollaborateReq;
+import org.example.request.collaborate.CreateCollaborateReq;
 import org.example.service.ICartoonService;
 import org.example.service.ICollaborateService;
 import org.example.utils.CommonUtil;

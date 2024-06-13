@@ -1,4 +1,4 @@
-package org.example.request;
+package org.example.request.raw;
 
 import lombok.Data;
 

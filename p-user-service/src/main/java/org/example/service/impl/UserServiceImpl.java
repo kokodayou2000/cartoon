@@ -3,17 +3,14 @@ package org.example.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.Md5Crypt;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.example.core.AjaxResult;
 import org.example.enums.SendCodeEnum;
-import org.example.fegin.IFileServer;
 import org.example.interceptor.TokenCheckInterceptor;
 import org.example.model.BaseUser;
-import org.example.model.ImageDO;
 import org.example.model.UserDO;
 import org.example.mapper.UserMapper;
 import org.example.model.UserInfo;
@@ -32,9 +29,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,8 +47,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
     @Autowired
     private UserMapper userMapper;
 
-    @Autowired
-    private IFileServer uploadAvatar;
 
     @Override
     public AjaxResult uploadAvatar(String url) {
@@ -64,7 +59,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
         if (updateById != 1){
             return AjaxResult.error("更新头像失败");
         }
-        return result;
+        return AjaxResult.success();
     }
 
     @Override
@@ -100,7 +95,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
     @Override
     public UserVO search(String userId) {
         UserDO userDO = userMapper.selectById(userId);
+        if(null == userDO) {
+            return null;
+        }
         UserVO userVO = new UserVO();
+
         BeanUtils.copyProperties(userDO,userVO);
         return userVO;
     }

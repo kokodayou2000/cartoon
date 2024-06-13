@@ -2,19 +2,16 @@ package org.example.controller;
 
 import org.example.core.AjaxResult;
 import org.example.model.PaperDO;
-import org.example.request.AddPaperPatternReq;
-import org.example.request.CreatePaperReq;
-import org.example.request.UpdateChapterStatusReq;
+import org.example.request.paper.AddPaperPatternReq;
+import org.example.request.paper.CreatePaperReq;
 import org.example.service.IChapterService;
 import org.example.service.IPaperService;
 import org.example.service.IPdfService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/paper")

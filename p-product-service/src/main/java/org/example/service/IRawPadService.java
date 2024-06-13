@@ -2,7 +2,7 @@ package org.example.service;
 
 import org.example.core.AjaxResult;
 import org.example.model.UpdateRawPadReq;
-import org.example.request.CreateRawPadReq;
+import org.example.request.raw.CreateRawPadReq;
 
 public interface IRawPadService {
 

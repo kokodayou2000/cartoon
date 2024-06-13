@@ -2,9 +2,8 @@ package org.example.service;
 
 import org.example.core.AjaxResult;
 import org.example.model.PaperDO;
-import org.example.request.AddPaperPatternReq;
-import org.example.request.CreatePaperReq;
-import org.springframework.web.multipart.MultipartFile;
+import org.example.request.paper.AddPaperPatternReq;
+import org.example.request.paper.CreatePaperReq;
 
 import java.util.List;
 
