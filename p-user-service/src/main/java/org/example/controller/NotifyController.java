@@ -45,6 +45,7 @@ public class NotifyController {
         String text = captchaProducer.createText();
         log.info("图形验证码"+text);
         BufferedImage image = captchaProducer.createImage(text);
+        System.out.println(redisTemplate);
         ServletOutputStream outputStream = null;
         try {
             outputStream = resp.getOutputStream();
@@ -53,6 +54,7 @@ public class NotifyController {
             log.info("captchaKey = {}",captchaKey);
             //存放到redis中
             redisTemplate.opsForValue().set(captchaKey,text, TimeConstants.EXPIRE_TIME_3, TimeUnit.MILLISECONDS);
+
             outputStream.flush();
 
         } catch (IOException e) {
@@ -104,12 +106,14 @@ public class NotifyController {
      */
     private String getCaptchaKey(HttpServletRequest req){
         String ipAddr = CommonUtil.getIpAddr(req);
+        if ("0:0:0:0:0:0:0:1".equals(ipAddr)){
+            ipAddr = "127.0.0.1";
+        }
         String reqHeader = req.getHeader("User-Agent");
         String key = "user-service:captcha:"+ CommonUtil.MD5(ipAddr+reqHeader);
         log.info("ip={}",ipAddr);
         log.info("userAgent={}",reqHeader);
         log.info("key={}",key);
-
 
         return key;
     }

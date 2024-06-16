@@ -43,17 +43,18 @@ public class CartoonServiceImpl implements ICartoonService {
 
     @Override
     public AjaxResult list(String order,int page, int size) {
-        PageRequest pageRequest ;
-        if (ORDER_FIELD.contains(order)){
-            pageRequest  = PageRequest.of(page,size,Sort.by(order).descending());
-        }else {
-            pageRequest  = PageRequest.of(page,size);
-        }
+//        PageRequest pageRequest ;
+//        if (ORDER_FIELD.contains(order)){
+//            pageRequest  = PageRequest.of(page,size,Sort.by(order).descending());
+//        }else {
+//            pageRequest  = PageRequest.of(page,size);
+//        }
 
 //        Page<CartoonDO> dos = cartoonRepository.findAll(pageRequest);
         Iterable<CartoonDO> all = cartoonRepository.findAll();
-
-        return AjaxResult.success(all);
+        List<CartoonDO> list = new ArrayList<>();
+        all.iterator().forEachRemaining(list::add);
+        return AjaxResult.success(list);
     }
 
     @Override

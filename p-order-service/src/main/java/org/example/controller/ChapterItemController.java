@@ -26,8 +26,12 @@ public class ChapterItemController {
         return chapterItemService.buyList();
     }
 
+
     /**
      * 获取本章节是否被该 user 购买,当用户查看漫画的时候，进行可以进行权限查询
+     * @param userId 用户id
+     * @param chapterId 章节id
+     * @return 用户在本章节的购买列表
      */
     @GetMapping("/isBuy/{userId}/{chapterId}")
     public AjaxResult isBuy(
@@ -36,6 +40,7 @@ public class ChapterItemController {
     ){
         return chapterItemService.isBuy(userId,chapterId);
     }
+
 
     /**
      * 获取漫画的销量

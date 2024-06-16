@@ -91,7 +91,8 @@ spring cloud 高版本 弃用了 Robbon 需要在 gateway 服务中添加
 高版本的jdk，javax中的一些内容被删除了，所以必须更新jjwt版本
 新版本的写法大不相同 ，自定义 hs265 版本的密钥 必须字符的个数达标才行
 
-
+6. redis配置
+新版本使用的配置前缀是 spring.data.redis
 
 
 

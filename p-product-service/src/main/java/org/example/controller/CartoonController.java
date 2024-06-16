@@ -65,6 +65,7 @@ public class CartoonController {
 
     /**
      * 获取漫画列表 一次获取10个漫画
+     * order 排序方式
      * @return 漫画列表
      */
     @GetMapping("/list/{order}/{page}/{size}")
